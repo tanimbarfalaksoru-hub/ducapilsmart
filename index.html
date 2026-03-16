@@ -247,29 +247,29 @@
       margin-left: auto;
     }
     .mobile-menu-btn {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
       color: var(--primary);
-      background: rgba(26, 86, 219, 0.15);
-      border: none;
-      font-weight: 600;
+      background: transparent;
+      border: 1.5px solid var(--primary);
+      font-weight: 700;
+      font-size: 1.4rem;
       flex-shrink: 0;
       padding: 0;
-      border-radius: 10px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      line-height: 1;
     }
     .mobile-menu-btn:active {
-      background: rgba(26, 86, 219, 0.25);
-      transform: scale(0.95);
+      background: var(--primary-light);
+      transform: scale(0.92);
     }
     .mobile-menu-btn:hover {
-      background: rgba(26, 86, 219, 0.2);
+      background: var(--primary-light);
     }
     
     .mobile-menu-overlay {
@@ -376,21 +376,24 @@
       display: none;
       background: white;
       border-bottom: 1px solid #e2e8f0;
-      padding: 12px 16px;
+      padding: 10px 12px;
       box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      position: sticky;
+      top: 64px;
+      z-index: 40;
     }
     .mobile-top-nav-content {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 8px;
+      justify-content: flex-start;
+      gap: 6px;
       overflow-x: auto;
       scroll-behavior: smooth;
-      scroll-padding-right: 16px;
+      scroll-padding-right: 12px;
       -webkit-overflow-scrolling: touch;
     }
     .mobile-top-nav-content::-webkit-scrollbar {
-      height: 3px;
+      height: 2px;
     }
     .mobile-top-nav-content::-webkit-scrollbar-thumb {
       background: #cbd5e1;
@@ -398,23 +401,26 @@
     }
     .mobile-top-nav-item {
       white-space: nowrap;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.8rem;
+      padding: 7px 12px;
+      border-radius: 18px;
+      font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s ease;
       color: #64748b;
       background: #f1f5f9;
       border: none;
       flex-shrink: 0;
+      letter-spacing: 0.3px;
     }
     .mobile-top-nav-item:hover {
       background: #e2e8f0;
+      transform: translateY(-1px);
     }
     .mobile-top-nav-item.active {
       background: var(--primary);
       color: white;
+      box-shadow: 0 2px 8px rgba(26, 86, 219, 0.3);
     }
 
     .header-sticky {
@@ -457,12 +463,33 @@
       animation: fadeUp 0.3s ease;
     }
 
+    .mobile-nav-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 2px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #94a3b8;
+      background: transparent;
+      border: none;
+      font-weight: 600;
+      font-size: 0.65rem;
+    }
+    .mobile-nav-item:active {
+      transform: scale(0.85);
+    }
+    .mobile-nav-item.active {
+      color: var(--primary);
+    }
+
     @media (max-width: 768px) {
       .desktop-nav { display: none !important; }
       .mobile-top-nav { display: none; }
       .mobile-nav { display: flex !important; }
       .hero-illust { display: none; }
-      main { padding-top: 0; }
+      main { padding-top: 0; padding-bottom: 72px; }
       .mobile-menu-btn {
         display: flex !important;
       }
@@ -1576,5 +1603,5 @@
   // Initialize icons
   lucide.createIcons();
 </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dd19d9fb6eb49d1',t:'MTc3MzY0MTY0Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dd1ab51917a5037',t:'MTc3MzY0MjIwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
