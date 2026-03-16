@@ -1,769 +1,444 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dukcapil Smart - Kepulauan Tanimbar</title>
-    
-    <!-- Tailwind CSS -->
+    <title>Dukcapil Smart - Kabupaten Kepulauan Tanimbar</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts: Plus Jakarta Sans -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                            800: '#075985',
-                            900: '#0c4a6e',
-                        },
-                        success: '#10b981',
-                    },
-                    backgroundImage: {
-                        'pattern': "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230ea5e9' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-                    }
-                }
-            }
-        }
-    </script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #f8fafc; color: #334155; }
-        
-        /* Page Transitions */
-        .page-section { display: none; animation: fadeIn 0.4s ease-out; }
-        .page-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Custom Inputs */
-        .form-label { @apply block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2; }
-        .input-group { @apply relative; }
-        .input-icon { @apply absolute left-4 top-3.5 text-slate-400 transition-colors group-focus-within:text-brand-500; }
-        .form-input {
-            @apply w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 
-            focus:bg-white focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10 transition-all outline-none font-medium placeholder-slate-400;
+        body { font-family: 'Inter', sans-serif; }
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://image.qwenlm.ai/public_source/c57c1602-3a61-47d4-847b-af5690e99e3f/14853f8e0-c645-432e-94d1-a1c0aeea5f0e.png');
+            background-size: cover;
+            background-position: center;
         }
-        .form-select {
-            @apply w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 
-            focus:bg-white focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10 transition-all outline-none font-medium;
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
         }
-        
-        /* Buttons */
-        .btn-primary {
-            @apply w-full py-4 px-6 bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 
-            text-white font-bold rounded-xl shadow-lg shadow-brand-500/30 transform hover:-translate-y-0.5 transition-all duration-200 text-center;
-        }
-        .btn-success {
-            @apply w-full py-4 px-6 bg-gradient-to-r from-success to-emerald-500 hover:from-emerald-600 hover:to-emerald-500 
-            text-white font-bold rounded-xl shadow-lg shadow-emerald-500/30 transform hover:-translate-y-0.5 transition-all duration-200 text-center;
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
     </style>
 </head>
-<body class="antialiased flex flex-col min-h-screen bg-pattern">
+<body class="bg-gray-50 text-gray-800">
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/60">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <!-- Logo -->
-                <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
-                    <div class="w-10 h-10 bg-gradient-to-br from-brand-600 to-brand-800 rounded-lg flex items-center justify-center text-white shadow-md">
-                        <i class="fa-solid fa-building-columns"></i>
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md fixed w-full z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
                     </div>
                     <div>
-                        <h1 class="text-lg font-extrabold text-slate-900 leading-tight">DUKCAPIL<span class="text-brand-600">SMART</span></h1>
-                        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Kab. Kep. Tanimbar</p>
+                        <h1 class="text-xl font-bold text-blue-900 leading-tight">DUKCAPIL SMART</h1>
+                        <p class="text-xs text-gray-500 font-medium tracking-wider">KABUPATEN KEPULAUAN TANIMBAR</p>
                     </div>
                 </div>
                 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <button onclick="navigateTo('home')" class="text-sm font-semibold text-slate-600 hover:text-brand-600 transition-colors">Beranda</button>
-                    <button onclick="navigateTo('about')" class="text-sm font-semibold text-slate-600 hover:text-brand-600 transition-colors">Tentang</button>
-                    <button onclick="navigateTo('procedure')" class="text-sm font-semibold text-slate-600 hover:text-brand-600 transition-colors">Prosedur</button>
-                    <button onclick="navigateTo('contact')" class="text-sm font-semibold text-slate-600 hover:text-brand-600 transition-colors">Kontak</button>
-                </div>
-
-                <!-- Auth Buttons -->
-                <div class="hidden md:flex items-center gap-3">
-                    <button id="nav-login-btn" onclick="navigateTo('login')" class="px-5 py-2.5 text-sm font-bold text-brand-600 bg-brand-50 hover:bg-brand-100 rounded-lg transition-colors">
-                        Masuk
-                    </button>
-                    <button id="nav-register-btn" onclick="navigateTo('register')" class="hidden px-5 py-2.5 text-sm font-bold text-white bg-success hover:bg-emerald-600 rounded-lg shadow-md transition-all">
-                        Daftar
-                    </button>
-                    <button id="nav-logout-btn" onclick="handleLogout()" class="hidden px-5 py-2.5 text-sm font-bold text-white bg-red-500 hover:bg-red-600 rounded-lg shadow-md transition-all">
-                        Keluar
-                    </button>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#beranda" class="text-gray-600 hover:text-blue-600 font-medium transition">Beranda</a>
+                    <a href="#layanan" class="text-gray-600 hover:text-blue-600 font-medium transition">Layanan</a>
+                    <a href="#persyaratan" class="text-gray-600 hover:text-blue-600 font-medium transition">Persyaratan</a>
+                    <a href="#kontak" class="text-gray-600 hover:text-blue-600 font-medium transition">Kontak</a>
+                    <a href="#login" class="bg-blue-600 text-white px-5 py-2 rounded-full font-medium hover:bg-blue-700 transition shadow-lg shadow-blue-600/30">Login Mandiri</a>
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <button class="md:hidden text-slate-600 p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
-                    <i class="fa-solid fa-bars text-xl"></i>
-                </button>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-blue-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
             </div>
-        </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 absolute w-full shadow-lg">
-            <div class="px-4 pt-2 pb-6 space-y-2">
-                <button onclick="navigateTo('home')" class="block w-full text-left px-4 py-3 text-slate-600 font-semibold hover:bg-slate-50 rounded-lg">Beranda</button>
-                <button onclick="navigateTo('about')" class="block w-full text-left px-4 py-3 text-slate-600 font-semibold hover:bg-slate-50 rounded-lg">Tentang Kami</button>
-                <button onclick="navigateTo('procedure')" class="block w-full text-left px-4 py-3 text-slate-600 font-semibold hover:bg-slate-50 rounded-lg">Prosedur</button>
-                <button onclick="navigateTo('contact')" class="block w-full text-left px-4 py-3 text-slate-600 font-semibold hover:bg-slate-50 rounded-lg">Kontak</button>
-                <div class="border-t border-slate-100 my-2"></div>
-                <button onclick="navigateTo('login')" class="block w-full text-left px-4 py-3 text-brand-600 font-bold">Masuk / Daftar</button>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 border-t pt-4">
+                <a href="#beranda" class="block py-2 text-gray-600 hover:text-blue-600">Beranda</a>
+                <a href="#layanan" class="block py-2 text-gray-600 hover:text-blue-600">Layanan</a>
+                <a href="#persyaratan" class="block py-2 text-gray-600 hover:text-blue-600">Persyaratan</a>
+                <a href="#kontak" class="block py-2 text-gray-600 hover:text-blue-600">Kontak</a>
+                <a href="#login" class="block mt-4 text-center bg-blue-600 text-white px-5 py-2 rounded-lg font-medium">Login Mandiri</a>
             </div>
         </div>
     </nav>
 
-    <!-- MAIN CONTENT -->
-    <main class="flex-grow pt-24 pb-12">
+    <!-- Hero Section -->
+    <section id="beranda" class="hero-bg h-screen min-h-[600px] flex items-center justify-center relative pt-16">
+        <div class="container mx-auto px-4 text-center text-white relative z-10">
+            <span class="inline-block py-1 px-3 rounded-full bg-blue-500/30 border border-blue-400/50 backdrop-blur-sm text-sm font-semibold mb-4 animate-pulse">
+                Layanan Administrasi Kependudukan Digital
+            </span>
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                Melayani dengan <br> <span class="text-blue-400">Hati & Teknologi</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
+                Sistem Informasi Pelayanan Kependudukan Kabupaten Kepulauan Tanimbar. Urus dokumen kependudukan Anda dengan mudah, cepat, dan transparan.
+            </p>
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="#layanan" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition shadow-lg shadow-blue-600/40 transform hover:-translate-y-1">
+                    Mulai Pengajuan
+                </a>
+                <a href="#cek-status" class="bg-white hover:bg-gray-100 text-blue-900 px-8 py-3 rounded-lg font-semibold transition shadow-lg transform hover:-translate-y-1">
+                    Cek Status Dokumen
+                </a>
+            </div>
+        </div>
+        
+        <!-- Wave Effect -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+            <svg class="relative block w-full h-[60px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="fill-gray-50"></path>
+            </svg>
+        </div>
+    </section>
 
-        <!-- 1. HOME PAGE -->
-        <section id="home" class="page-section active">
-            <!-- Hero -->
-            <div class="relative bg-brand-900 rounded-3xl mx-4 md:mx-8 lg:mx-12 overflow-hidden shadow-2xl mb-12">
-                <div class="absolute inset-0">
-                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=2301" alt="Office" class="w-full h-full object-cover opacity-10">
-                    <div class="absolute inset-0 bg-gradient-to-r from-brand-900 via-brand-900/90 to-transparent"></div>
+    <!-- Stats Section -->
+    <section class="py-10 bg-gray-50 -mt-10 relative z-20">
+        <div class="container mx-auto px-4">
+            <div class="bg-white rounded-2xl shadow-xl p-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <h3 class="text-3xl font-bold text-blue-600">120k+</h3>
+                    <p class="text-gray-500 text-sm mt-1">Penduduk Terlayani</p>
                 </div>
-                <div class="relative max-w-7xl mx-auto px-6 py-20 md:py-28 flex flex-col md:flex-row items-center">
-                    <div class="md:w-1/2 space-y-6 text-center md:text-left">
-                        <span class="inline-block px-4 py-1.5 rounded-full bg-brand-800/50 border border-brand-700 text-brand-200 text-xs font-bold uppercase tracking-wider">
-                            Layanan Digital Terintegrasi
-                        </span>
-                        <h1 class="text-4xl md:text-5xl font-extrabold text-white leading-tight">
-                            Urus Administrasi <br>
-                            <span class="text-brand-400">Tanpa Ribet</span>
-                        </h1>
-                        <p class="text-lg text-brand-100 max-w-lg mx-auto md:mx-0">
-                            Platform resmi Dinas Kependudukan Kabupaten Kepulauan Tanimbar. Cepat, Aman, dan Transparan.
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4 pt-4 justify-center md:justify-start">
-                            <button onclick="document.getElementById('services-container').scrollIntoView({behavior: 'smooth'})" class="px-8 py-4 bg-white text-brand-900 font-bold rounded-lg hover:bg-brand-50 transition-colors shadow-lg">
-                                Mulai Pengajuan
-                            </button>
-                            <button onclick="navigateTo('procedure')" class="px-8 py-4 bg-brand-800/50 backdrop-blur text-white font-bold rounded-lg border border-brand-700 hover:bg-brand-800 transition-colors">
-                                Cara Mengurus
-                            </button>
-                        </div>
-                    </div>
+                <div>
+                    <h3 class="text-3xl font-bold text-blue-600">45k+</h3>
+                    <p class="text-gray-500 text-sm mt-1">KTP Elektronik</p>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-bold text-blue-600">98%</h3>
+                    <p class="text-gray-500 text-sm mt-1">Kepuasan Masyarakat</p>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-bold text-blue-600">24/7</h3>
+                    <p class="text-gray-500 text-sm mt-1">Layanan Online</p>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Services Grid -->
-            <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-extrabold text-slate-900">Layanan Kami</h2>
-                    <p class="text-slate-500 mt-2">Pilih dokumen kependudukan yang ingin Anda urus</p>
-                    <div class="w-16 h-1 bg-brand-500 mx-auto mt-4 rounded-full"></div>
-                </div>
-                
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="services-container">
-                    <!-- Services injected by JS -->
-                </div>
-            </section>
-        </section>
+    <!-- Services Section -->
+    <section id="layanan" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Layanan Kami</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto rounded-full"></div>
+                <p class="mt-4 text-gray-600 max-w-2xl mx-auto">Pilih jenis layanan administrasi kependudukan yang Anda butuhkan. Proses pengajuan dilakukan secara online.</p>
+            </div>
 
-        <!-- 2. ABOUT PAGE -->
-        <section id="about" class="page-section max-w-5xl mx-auto px-4">
-            <div class="bg-white rounded-2xl shadow-card p-8 md:p-12 border border-slate-100">
-                <h2 class="text-3xl font-extrabold text-slate-900 mb-6">Tentang Dukcapil Smart</h2>
-                <p class="text-slate-600 text-lg leading-relaxed mb-8">
-                    Kami berkomitmen memberikan pelayanan publik prima melalui transformasi digital. Disdukcapil Kabupaten Kepulauan Tanimbar hadir untuk memudahkan masyarakat mengurus administrasi tanpa hambatan birokrasi.
-                </p>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="bg-brand-50 p-6 rounded-xl border border-brand-100">
-                        <h3 class="text-xl font-bold text-brand-800 mb-2"><i class="fa-solid fa-eye mr-2"></i>Visi</h3>
-                        <p class="text-slate-600 text-sm">Terwujudnya pelayanan administrasi kependudukan yang profesional, akuntabel, dan berbasis teknologi informasi.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="service-card bg-white border border-gray-100 rounded-2xl p-6 shadow-sm transition-all duration-300 cursor-pointer group">
+                    <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+                        </svg>
                     </div>
-                    <div class="bg-brand-50 p-6 rounded-xl border border-brand-100">
-                        <h3 class="text-xl font-bold text-brand-800 mb-2"><i class="fa-solid fa-bullseye mr-2"></i>Misi</h3>
-                        <ul class="text-slate-600 text-sm space-y-2 list-disc list-inside">
-                            <li>Meningkatkan kualitas pelayanan publik.</li>
-                            <li>Mewujudkan data kependudukan tunggal yang akurat.</li>
-                            <li>Menerapkan sistem informasi terintegrasi.</li>
-                        </ul>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Pembuatan KTP-EL</h3>
+                    <p class="text-gray-500 mb-4 text-sm">Perekaman data biometrik dan penerbitan Kartu Tanda Penduduk Elektronik baru.</p>
+                    <a href="#" class="text-blue-600 font-medium text-sm flex items-center group-hover:underline">
+                        Ajukan Sekarang <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-card bg-white border border-gray-100 rounded-2xl p-6 shadow-sm transition-all duration-300 cursor-pointer group">
+                    <div class="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center text-green-600 mb-6 group-hover:bg-green-600 group-hover:text-white transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
                     </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Kartu Keluarga (KK)</h3>
+                    <p class="text-gray-500 mb-4 text-sm">Penerbitan KK baru, perubahan data anggota keluarga, atau hilang/rusak.</p>
+                    <a href="#" class="text-blue-600 font-medium text-sm flex items-center group-hover:underline">
+                        Ajukan Sekarang <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card bg-white border border-gray-100 rounded-2xl p-6 shadow-sm transition-all duration-300 cursor-pointer group">
+                    <div class="w-14 h-14 bg-yellow-50 rounded-xl flex items-center justify-center text-yellow-600 mb-6 group-hover:bg-yellow-600 group-hover:text-white transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Akta Kelahiran</h3>
+                    <p class="text-gray-500 mb-4 text-sm">Penerbitan akta kelahiran untuk bayi baru lahir atau pengurusan akta lama.</p>
+                    <a href="#" class="text-blue-600 font-medium text-sm flex items-center group-hover:underline">
+                        Ajukan Sekarang <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="service-card bg-white border border-gray-100 rounded-2xl p-6 shadow-sm transition-all duration-300 cursor-pointer group">
+                    <div class="w-14 h-14 bg-red-50 rounded-xl flex items-center justify-center text-red-600 mb-6 group-hover:bg-red-600 group-hover:text-white transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Akta Kematian</h3>
+                    <p class="text-gray-500 mb-4 text-sm">Pelaporan dan penerbitan akta kematian bagi penduduk yang meninggal dunia.</p>
+                    <a href="#" class="text-blue-600 font-medium text-sm flex items-center group-hover:underline">
+                        Ajukan Sekarang <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="service-card bg-white border border-gray-100 rounded-2xl p-6 shadow-sm transition-all duration-300 cursor-pointer group">
+                    <div class="w-14 h-14 bg-purple-50 rounded-xl flex items-center justify-center text-purple-600 mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Pindah Datang</h3>
+                    <p class="text-gray-500 mb-4 text-sm">Pengurusan Surat Keterangan Pindah (SKP) untuk pindah dalam/luar negeri.</p>
+                    <a href="#" class="text-blue-600 font-medium text-sm flex items-center group-hover:underline">
+                        Ajukan Sekarang <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="service-card bg-white border border-gray-100 rounded-2xl p-6 shadow-sm transition-all duration-300 cursor-pointer group">
+                    <div class="w-14 h-14 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Cetak Ulang Dokumen</h3>
+                    <p class="text-gray-500 mb-4 text-sm">Pencetakan ulang dokumen kependudukan yang hilang atau rusak.</p>
+                    <a href="#" class="text-blue-600 font-medium text-sm flex items-center group-hover:underline">
+                        Ajukan Sekarang <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- 3. PROCEDURE PAGE -->
-        <section id="procedure" class="page-section max-w-4xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-extrabold text-slate-900">Alur Pelayanan</h2>
-                <p class="text-slate-500 mt-2">Ikuti 3 langkah mudah untuk mendapatkan dokumen Anda</p>
-            </div>
-            
-            <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-200 before:to-transparent">
-                <!-- Step 1 -->
-                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-brand-600 text-white shadow shrink-0 z-10 font-bold">1</div>
-                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-6 rounded-xl shadow-sm border border-slate-100 ml-6">
-                        <h3 class="font-bold text-slate-800">Pilih Layanan & Login</h3>
-                        <p class="text-sm text-slate-500 mt-2">Pilih jenis dokumen di beranda, lalu masuk ke akun Anda.</p>
-                    </div>
-                </div>
-                <!-- Step 2 -->
-                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-brand-600 text-white shadow shrink-0 z-10 font-bold">2</div>
-                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-6 rounded-xl shadow-sm border border-slate-100 ml-6">
-                        <h3 class="font-bold text-slate-800">Isi Data & Upload</h3>
-                        <p class="text-sm text-slate-500 mt-2">Lengkapi formulir digital dan unggah foto dokumen pendukung.</p>
-                    </div>
-                </div>
-                <!-- Step 3 -->
-                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-success text-white shadow shrink-0 z-10 font-bold"><i class="fa-solid fa-check"></i></div>
-                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-6 rounded-xl shadow-sm border border-slate-100 ml-6">
-                        <h3 class="font-bold text-slate-800">Verifikasi & Ambil</h3>
-                        <p class="text-sm text-slate-500 mt-2">Tunggu notifikasi persetujuan. Dokumen bisa diambil di kantor.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. CONTACT PAGE -->
-        <section id="contact" class="page-section max-w-6xl mx-auto px-4">
-            <div class="grid md:grid-cols-2 gap-12">
-                <div class="space-y-8">
-                    <h2 class="text-3xl font-extrabold text-slate-900">Hubungi Kami</h2>
-                    <p class="text-slate-500">Tim kami siap membantu kendala Anda.</p>
+    <!-- Requirements Section -->
+    <section id="persyaratan" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Persyaratan Umum</h2>
+                    <p class="text-gray-600 mb-8">Setiap layanan memiliki persyaratan spesifik. Pastikan dokumen Anda lengkap sebelum mengajukan permohonan online.</p>
                     
                     <div class="space-y-4">
-                        <div class="flex items-start gap-4 p-4 rounded-xl bg-white border border-slate-100 shadow-sm">
-                            <div class="w-10 h-10 bg-brand-50 rounded-lg flex items-center justify-center text-brand-600 shrink-0">
-                                <i class="fa-solid fa-location-dot"></i>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-blue-500 flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <svg class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
                             </div>
-                            <div>
-                                <h3 class="font-bold text-slate-800">Kantor Pusat</h3>
-                                <p class="text-sm text-slate-500">Jl. Poros Saumlaki, Kab. Kepulauan Tanimbar</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-4 p-4 rounded-xl bg-white border border-slate-100 shadow-sm">
-                            <div class="w-10 h-10 bg-brand-50 rounded-lg flex items-center justify-center text-brand-600 shrink-0">
-                                <i class="fa-solid fa-phone"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-slate-800">Telepon / WA</h3>
-                                <p class="text-sm text-slate-500">(0918) 21XXX</p>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-semibold text-gray-900">KTP Asli & Fotokopi</h4>
+                                <p class="text-sm text-gray-500">Wajib membawa KTP asli dan fotokopi untuk verifikasi data.</p>
                             </div>
                         </div>
-                        <div class="flex items-start gap-4 p-4 rounded-xl bg-white border border-slate-100 shadow-sm">
-                            <div class="w-10 h-10 bg-brand-50 rounded-lg flex items-center justify-center text-brand-600 shrink-0">
-                                <i class="fa-solid fa-envelope"></i>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-green-500 flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <svg class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
                             </div>
-                            <div>
-                                <h3 class="font-bold text-slate-800">Email</h3>
-                                <p class="text-sm text-slate-500">dukcapil@tanimbar.go.id</p>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-semibold text-gray-900">Kartu Keluarga (KK)</h4>
+                                <p class="text-sm text-gray-500">Fotokopi KK terbaru sebagai bukti domisili dan hubungan keluarga.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-yellow-500 flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <svg class="h-5 w-5 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-semibold text-gray-900">Surat Pengantar RT/RW</h4>
+                                <p class="text-sm text-gray-500">Surat keterangan dari kelurahan/desa setempat.</p>
                             </div>
                         </div>
                     </div>
+                    
+                    <button class="mt-8 text-blue-600 font-semibold hover:text-blue-800 flex items-center">
+                        Lihat Persyaratan Lengkap <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </button>
                 </div>
                 
-                <form class="bg-white p-8 rounded-2xl shadow-card border border-slate-100">
-                    <div class="space-y-4">
-                        <div>
-                            <label class="form-label">Nama Lengkap</label>
-                            <input type="text" class="form-input" placeholder="Masukkan nama Anda">
+                <div class="lg:w-1/2">
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                        <div class="bg-blue-600 p-6 text-white">
+                            <h3 class="text-xl font-bold">Cek Status Pengajuan</h3>
+                            <p class="text-blue-100 text-sm mt-1">Masukkan nomor resi untuk melacak dokumen Anda.</p>
                         </div>
-                        <div>
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-input" placeholder="nama@email.com">
-                        </div>
-                        <div>
-                            <label class="form-label">Pesan</label>
-                            <textarea rows="4" class="form-input" placeholder="Tulis pesan Anda..."></textarea>
-                        </div>
-                        <button class="btn-primary">Kirim Pesan</button>
-                    </div>
-                </form>
-            </div>
-        </section>
-
-        <!-- 5. LOGIN PAGE (BEAUTIFIED) -->
-        <section id="login" class="page-section flex items-center justify-center min-h-[85vh] py-12">
-            <div class="w-full max-w-5xl px-4">
-                <div class="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[600px]">
-                    <!-- Left Side: Form -->
-                    <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-                        <div class="mb-8">
-                            <h2 class="text-3xl font-extrabold text-slate-900 mb-2">Selamat Datang</h2>
-                            <p class="text-slate-500">Silakan masuk untuk melanjutkan pengajuan dokumen.</p>
-                            <p class="text-xs text-brand-600 mt-4 font-mono bg-brand-50 inline-block px-3 py-1.5 rounded-lg border border-brand-100">Demo: admin / admin</p>
-                        </div>
-                        
-                        <form onsubmit="handleLogin(event)" class="space-y-6">
-                            <div class="input-group group">
-                                <label class="form-label">Username / Email</label>
-                                <i class="fa-solid fa-user input-icon"></i>
-                                <input type="text" id="login-user" class="form-input" placeholder="admin" value="admin">
-                            </div>
-                            <div class="input-group group">
-                                <label class="form-label">Kata Sandi</label>
-                                <i class="fa-solid fa-lock input-icon"></i>
-                                <input type="password" id="login-pass" class="form-input" placeholder="••••••••" value="admin">
-                            </div>
-                            
-                            <div class="flex items-center justify-between text-sm">
-                                <label class="flex items-center gap-2 cursor-pointer text-slate-600">
-                                    <input type="checkbox" class="rounded text-brand-600 focus:ring-brand-500 w-4 h-4"> Ingat saya
-                                </label>
-                                <a href="#" class="text-brand-600 font-semibold hover:underline">Lupa sandi?</a>
-                            </div>
-
-                            <button type="submit" class="btn-primary mt-4">Masuk Sekarang</button>
-                        </form>
-                        
-                        <div class="mt-8 text-center text-sm text-slate-500">
-                            Belum punya akun? <button onclick="navigateTo('register')" class="text-brand-600 font-bold hover:underline">Daftar disini</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Right Side: Image/Art -->
-                    <div class="hidden md:block w-1/2 bg-gradient-to-br from-brand-600 to-brand-800 relative overflow-hidden">
-                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-                        <div class="absolute inset-0 flex items-center justify-center p-12">
-                            <div class="text-white text-center relative z-10">
-                                <div class="w-24 h-24 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center text-4xl mx-auto mb-6 rotate-12 shadow-lg">
-                                    <i class="fa-solid fa-shield-halved"></i>
+                        <div class="p-8">
+                            <form id="statusForm" onsubmit="handleStatusCheck(event)">
+                                <div class="mb-6">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2" for="resi">
+                                        Nomor Resi / NIK
+                                    </label>
+                                    <input class="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="resi" type="text" placeholder="Contoh: 810101..." required>
                                 </div>
-                                <h3 class="text-2xl font-bold mb-4">Aman & Terpercaya</h3>
-                                <p class="text-brand-100 leading-relaxed">Data Anda dilindungi dengan enkripsi tingkat tinggi. Pelayanan resmi pemerintah kabupaten.</p>
-                            </div>
-                        </div>
-                        <!-- Decorative Circles -->
-                        <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-                        <div class="absolute -top-24 -left-24 w-64 h-64 bg-black/10 rounded-full blur-3xl"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 6. REGISTER PAGE (BEAUTIFIED) -->
-        <section id="register" class="page-section flex items-center justify-center min-h-[85vh] py-12">
-            <div class="w-full max-w-5xl px-4">
-                <div class="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[600px]">
-                    <!-- Left Side: Form -->
-                    <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
-                        <div class="mb-8">
-                            <h2 class="text-3xl font-extrabold text-slate-900 mb-2">Buat Akun Baru</h2>
-                            <p class="text-slate-500">Daftar untuk mengakses layanan digital Dukcapil.</p>
-                        </div>
-                        
-                        <form onsubmit="handleRegister(event)" class="space-y-5">
-                            <div class="input-group group">
-                                <label class="form-label">Nama Lengkap</label>
-                                <i class="fa-solid fa-user-pen input-icon"></i>
-                                <input type="text" required class="form-input" placeholder="Sesuai KTP">
-                            </div>
-                            <div class="input-group group">
-                                <label class="form-label">NIK</label>
-                                <i class="fa-solid fa-id-card input-icon"></i>
-                                <input type="number" required class="form-input" placeholder="16 Digit NIK">
-                            </div>
-                            <div class="input-group group">
-                                <label class="form-label">Email</label>
-                                <i class="fa-solid fa-envelope input-icon"></i>
-                                <input type="email" required class="form-input" placeholder="nama@email.com">
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="input-group group">
-                                    <label class="form-label">Kata Sandi</label>
-                                    <i class="fa-solid fa-lock input-icon"></i>
-                                    <input type="password" id="reg-pass" required class="form-input" placeholder="••••••">
+                                <div class="mb-6">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                                        Email Pendaftar
+                                    </label>
+                                    <input class="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="email" type="email" placeholder="email@anda.com" required>
                                 </div>
-                                <div class="input-group group">
-                                    <label class="form-label">Konfirmasi</label>
-                                    <i class="fa-solid fa-key input-icon"></i>
-                                    <input type="password" id="reg-pass-conf" required class="form-input" placeholder="••••••">
-                                </div>
-                            </div>
-                            
-                            <button type="submit" class="btn-success mt-4">Daftar Sekarang</button>
-                        </form>
-                        
-                        <div class="mt-8 text-center text-sm text-slate-500">
-                            Sudah punya akun? <button onclick="navigateTo('login')" class="text-brand-600 font-bold hover:underline">Masuk disini</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Right Side: Image/Art -->
-                    <div class="hidden md:block w-1/2 bg-gradient-to-br from-success to-emerald-700 relative overflow-hidden order-1 md:order-2">
-                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-                        <div class="absolute inset-0 flex items-center justify-center p-12">
-                            <div class="text-white text-center relative z-10">
-                                <div class="w-24 h-24 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center text-4xl mx-auto mb-6 -rotate-12 shadow-lg">
-                                    <i class="fa-solid fa-user-plus"></i>
-                                </div>
-                                <h3 class="text-2xl font-bold mb-4">Gabung Bersama Kami</h3>
-                                <p class="text-emerald-100 leading-relaxed">Nikmati kemudahan mengurus administrasi kependudukan kapan saja dan di mana saja.</p>
-                            </div>
-                        </div>
-                        <!-- Decorative Circles -->
-                        <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-                        <div class="absolute -top-24 -left-24 w-64 h-64 bg-black/10 rounded-full blur-3xl"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 7. DIGITAL FORM PAGE (BEAUTIFIED) -->
-        <section id="digital-form" class="page-section py-12">
-            <div class="max-w-5xl mx-auto px-4">
-                <div class="bg-white shadow-2xl rounded-3xl overflow-hidden border border-slate-100">
-                    <!-- Header -->
-                    <div class="bg-brand-900 px-8 py-6 flex justify-between items-center">
-                        <div>
-                            <h2 class="text-xl font-bold text-white"><i class="fa-solid fa-file-signature mr-2 text-brand-400"></i>Formulir Pengajuan</h2>
-                            <p class="text-brand-200 text-xs mt-1">Lengkapi data berikut dengan benar dan teliti</p>
-                        </div>
-                        <button onclick="navigateTo('home')" class="text-white/70 hover:text-white transition-colors bg-white/10 hover:bg-white/20 rounded-lg p-2"><i class="fa-solid fa-times text-xl"></i></button>
-                    </div>
-                    
-                    <form onsubmit="alert('Pengajuan berhasil dikirim!'); navigateTo('home'); return false;" class="p-8 md:p-12 space-y-10">
-                        
-                        <!-- Info Box -->
-                        <div class="bg-gradient-to-r from-brand-50 to-blue-50 border border-brand-100 rounded-2xl p-6 grid grid-cols-1 md:grid-cols-2 gap-6 shadow-sm">
-                            <div>
-                                <label class="text-xs font-bold text-brand-600 uppercase tracking-wider mb-1 block">Tanggal Pengajuan</label>
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-regular fa-calendar text-brand-400"></i>
-                                    <input type="text" id="form-date" readonly class="w-full bg-transparent font-mono font-bold text-slate-700 outline-none">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="text-xs font-bold text-brand-600 uppercase tracking-wider mb-1 block">Jenis Layanan</label>
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-solid fa-tag text-brand-400"></i>
-                                    <input type="text" id="form-service" readonly class="w-full bg-transparent font-bold text-brand-700 outline-none">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section 1: Personal Data -->
-                        <div>
-                            <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
-                                <span class="w-8 h-8 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center text-sm mr-3 font-bold">1</span>
-                                Data Pribadi
-                            </h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="md:col-span-2 input-group group">
-                                    <label class="form-label">Nama Lengkap</label>
-                                    <i class="fa-solid fa-user input-icon"></i>
-                                    <input type="text" required class="form-input" placeholder="Sesuai KTP">
-                                </div>
-                                <div class="input-group group">
-                                    <label class="form-label">NIK</label>
-                                    <i class="fa-solid fa-id-card input-icon"></i>
-                                    <input type="number" required class="form-input" placeholder="16 Digit">
-                                </div>
-                                <div class="input-group group">
-                                    <label class="form-label">No. Kartu Keluarga</label>
-                                    <i class="fa-solid fa-users input-icon"></i>
-                                    <input type="number" required class="form-input" placeholder="16 Digit">
-                                </div>
-                                <div class="input-group group">
-                                    <label class="form-label">Tempat Lahir</label>
-                                    <i class="fa-solid fa-location-dot input-icon"></i>
-                                    <input type="text" required class="form-input">
-                                </div>
-                                <div class="input-group group">
-                                    <label class="form-label">Tanggal Lahir</label>
-                                    <i class="fa-regular fa-calendar input-icon"></i>
-                                    <input type="date" required class="form-input">
-                                </div>
-                                <div class="input-group group">
-                                    <label class="form-label">Jenis Kelamin</label>
-                                    <i class="fa-solid fa-venus-mars input-icon"></i>
-                                    <select class="form-select">
-                                        <option>Laki-laki</option>
-                                        <option>Perempuan</option>
-                                    </select>
-                                </div>
-                                <div class="input-group group">
-                                    <label class="form-label">Agama</label>
-                                    <i class="fa-solid fa-star-and-crescent input-icon"></i>
-                                    <select class="form-select">
-                                        <option>Islam</option><option>Kristen</option><option>Katolik</option><option>Hindu</option><option>Buddha</option><option>Konghucu</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section 2: Address -->
-                        <div>
-                            <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
-                                <span class="w-8 h-8 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center text-sm mr-3 font-bold">2</span>
-                                Alamat Domisili
-                            </h3>
-                            <div class="space-y-6">
-                                <div class="input-group group">
-                                    <label class="form-label">Alamat Lengkap</label>
-                                    <i class="fa-solid fa-map-pin absolute left-4 top-4 text-slate-400 group-focus-within:text-brand-500"></i>
-                                    <textarea class="form-input pt-4" rows="2" placeholder="Nama Jalan, Gang, Nomor Rumah"></textarea>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                    <div class="input-group group">
-                                        <label class="form-label">Kecamatan</label>
-                                        <i class="fa-solid fa-building input-icon"></i>
-                                        <select class="form-select" required>
-                                            <option value="">Pilih Kecamatan...</option>
-                                            <option>Tanimbar Selatan</option><option>Selaru</option><option>Wertamrian</option>
-                                            <option>Wermaktian</option><option>Tanimbar Utara</option><option>Fordata</option>
-                                            <option>Wuarlabobar</option><option>Kormomolin</option><option>Nirunmas</option><option>Molumaru</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-group group">
-                                        <label class="form-label">Desa/Kelurahan</label>
-                                        <i class="fa-solid fa-house input-icon"></i>
-                                        <input type="text" class="form-input" required>
-                                    </div>
-                                    <div class="grid grid-cols-2 gap-4">
-                                        <div class="input-group group">
-                                            <label class="form-label">RT</label>
-                                            <input type="number" class="form-input pl-4">
-                                        </div>
-                                        <div class="input-group group">
-                                            <label class="form-label">RW</label>
-                                            <input type="number" class="form-input pl-4">
-                                        </div>
+                                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300" type="submit">
+                                    Cek Status
+                                </button>
+                            </form>
+                            <div id="statusResult" class="hidden mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                                <div class="flex items-center">
+                                    <svg class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <div>
+                                        <h4 class="font-bold text-green-800">Dokumen Sedang Diproses</h4>
+                                        <p class="text-sm text-green-600">Estimasi selesai: 2 Hari Kerja</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Section 3: Upload -->
-                        <div>
-                            <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
-                                <span class="w-8 h-8 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center text-sm mr-3 font-bold">3</span>
-                                Dokumen Pendukung
-                            </h3>
-                            <div class="border-2 border-dashed border-brand-200 bg-brand-50/50 rounded-2xl p-8 text-center hover:bg-brand-50 hover:border-brand-400 transition-all cursor-pointer group">
-                                <div class="w-16 h-16 bg-white text-brand-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 shadow-sm group-hover:scale-110 group-hover:rotate-6 transition-transform">
-                                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                                </div>
-                                <p class="text-slate-700 font-bold text-lg">Klik untuk upload atau drag file kesini</p>
-                                <p class="text-sm text-slate-500 mt-2">Format: PDF, JPG, PNG (Max 5MB)</p>
-                                <input type="file" class="hidden">
-                            </div>
-                        </div>
-
-                        <!-- Terms -->
-                        <div class="flex items-start gap-4 p-5 bg-yellow-50 rounded-xl border border-yellow-100">
-                            <input type="checkbox" required class="mt-1 w-5 h-5 text-brand-600 rounded focus:ring-brand-500 cursor-pointer">
-                            <p class="text-sm text-slate-600 leading-relaxed">
-                                Saya menyatakan bahwa data yang diisi adalah benar dan dapat dipertanggungjawabkan sesuai hukum yang berlaku. Saya menyetujui syarat & ketentuan pelayanan Dukcapil Kepulauan Tanimbar.
-                            </p>
-                        </div>
-
-                        <button type="submit" class="btn-primary text-lg shadow-xl shadow-brand-500/40">Kirim Pengajuan</button>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </section>
-
-    </main>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-sm">&copy; 2026 Dinas Kependudukan dan Pencatatan Sipil Kabupaten Kepulauan Tanimbar. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Service Modal -->
-    <div id="service-modal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-[60]">
-        <div class="modal-overlay absolute w-full h-full bg-slate-900/60 backdrop-blur-sm" onclick="closeModal()"></div>
-        <div class="modal-container bg-white w-11/12 md:max-w-lg mx-auto rounded-2xl shadow-2xl z-50 overflow-hidden transform transition-all scale-95" id="modal-content">
-            <div class="bg-brand-600 p-6 text-white relative">
-                <button onclick="closeModal()" class="absolute top-4 right-4 text-white/70 hover:text-white"><i class="fa-solid fa-times text-xl"></i></button>
-                <h3 class="text-xl font-bold" id="modal-title">Judul Layanan</h3>
-                <p class="text-brand-100 text-sm mt-1">Informasi Persyaratan</p>
-            </div>
-            <div class="p-6">
-                <p id="modal-desc" class="text-slate-600 leading-relaxed mb-6">Deskripsi</p>
+    <footer id="kontak" class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                        </div>
+                        <span class="text-lg font-bold">DUKCAPIL SMART</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Dinas Kependudukan dan Pencatatan Sipil Kabupaten Kepulauan Tanimbar. Melayani masyarakat dengan integritas dan profesionalisme.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                    </div>
+                </div>
                 
-                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 mb-6">
-                    <h4 class="font-bold text-slate-700 text-sm mb-2"><i class="fa-solid fa-list-check text-brand-500 mr-2"></i>Dokumen Umum:</h4>
-                    <ul class="text-sm text-slate-500 space-y-1 list-disc list-inside">
-                        <li>Fotokopi KK & KTP Asli</li>
-                        <li>Surat Pengantar Kelurahan</li>
-                        <li>Pas Foto 3x4 (Background Biru)</li>
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-white">Kontak Kami</h4>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 mr-2 text-blue-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span>Jl. Poros Saumlaki, Kabupaten Kepulauan Tanimbar, Maluku</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="h-5 w-5 mr-2 text-blue-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                            <span>(0918) 123456</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="h-5 w-5 mr-2 text-blue-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <span>dukcapil@tanimbarkab.go.id</span>
+                        </li>
                     </ul>
                 </div>
 
-                <div class="flex gap-3">
-                    <button onclick="closeModal()" class="flex-1 px-4 py-3 bg-slate-100 text-slate-700 font-bold rounded-lg hover:bg-slate-200 transition-colors">Tutup</button>
-                    <button onclick="proceedToAction()" class="flex-1 px-4 py-3 bg-brand-600 text-white font-bold rounded-lg hover:bg-brand-700 shadow-lg shadow-brand-500/30 transition-all">Ajukan Sekarang</button>
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-white">Jam Pelayanan</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li class="flex justify-between">
+                            <span>Senin - Kamis</span>
+                            <span class="text-white">08:00 - 15:00</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Jumat</span>
+                            <span class="text-white">08:00 - 11:00</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Sabtu - Minggu</span>
+                            <span class="text-red-400">Tutup</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-white">Tautan Cepat</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-blue-400 transition">Website Pemkab Tanimbar</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Kemendagri RI</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Pengaduan Masyarakat</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">FAQ</a></li>
+                    </ul>
                 </div>
             </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2023 Dinas Kependudukan dan Pencatatan Sipil Kabupaten Kepulauan Tanimbar. All rights reserved.</p>
+            </div>
         </div>
-    </div>
+    </footer>
 
     <script>
-        // Data Layanan
-        const services = [
-            { id: 'kk', name: 'Kartu Keluarga', icon: 'fa-users', color: 'blue', desc: 'Penerbitan KK baru, perubahan data anggota keluarga, atau karena kehilangan.' },
-            { id: 'ktp', name: 'KTP Elektronik', icon: 'fa-id-card', color: 'indigo', desc: 'Perekaman e-KTP baru (usia 17+), ganti rusak, hilang, atau perubahan data.' },
-            { id: 'kia', name: 'Kartu Identitas Anak', icon: 'fa-child', color: 'purple', desc: 'Identitas resmi anak sebagai perseorangan yang berlaku sejak lahir hingga usia 17 tahun.' },
-            { id: 'datang', name: 'Pindah Datang', icon: 'fa-house-user', color: 'teal', desc: 'Laporan penduduk yang pindah masuk ke wilayah Kabupaten Kepulauan Tanimbar.' },
-            { id: 'keluar', name: 'Pindah Keluar', icon: 'fa-truck-moving', color: 'orange', desc: 'Surat keterangan pindah bagi penduduk yang akan meninggalkan wilayah Tanimbar.' },
-            { id: 'lahir', name: 'Akta Kelahiran', icon: 'fa-baby', color: 'pink', desc: 'Pencatatan peristiwa kelahiran dan penerbitan akta sebagai identitas hukum anak.' },
-            { id: 'mati', name: 'Akta Kematian', icon: 'fa-heart-crack', color: 'slate', desc: 'Pelaporan kematian penduduk untuk keperluan administrasi ahli waris.' },
-            { id: 'nikah', name: 'Akta Perkawinan', icon: 'fa-rings-wedding', color: 'red', desc: 'Pencatatan perkawinan bagi penduduk yang melangsungkan pernikahan.' },
-            { id: 'cerai', name: 'Akta Perceraian', icon: 'fa-hand-holding-hand', color: 'yellow', desc: 'Pencatatan perceraian berdasarkan putusan pengadilan yang berkekuatan hukum tetap.' }
-        ];
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
 
-        let selectedServiceName = '';
-        let isLoggedIn = false;
-
-        // Init
-        document.addEventListener('DOMContentLoaded', () => {
-            const container = document.getElementById('services-container');
-            services.forEach(s => {
-                const card = document.createElement('div');
-                const colorMap = {
-                    blue: 'bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white',
-                    indigo: 'bg-indigo-50 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white',
-                    purple: 'bg-purple-50 text-purple-600 group-hover:bg-purple-600 group-hover:text-white',
-                    teal: 'bg-teal-50 text-teal-600 group-hover:bg-teal-600 group-hover:text-white',
-                    orange: 'bg-orange-50 text-orange-600 group-hover:bg-orange-600 group-hover:text-white',
-                    pink: 'bg-pink-50 text-pink-600 group-hover:bg-pink-600 group-hover:text-white',
-                    slate: 'bg-slate-100 text-slate-600 group-hover:bg-slate-600 group-hover:text-white',
-                    red: 'bg-red-50 text-red-600 group-hover:bg-red-600 group-hover:text-white',
-                    yellow: 'bg-yellow-50 text-yellow-600 group-hover:bg-yellow-500 group-hover:text-white'
-                };
-                
-                const btnColor = s.color === 'slate' ? 'text-slate-600' : `text-${s.color}-600`;
-
-                card.className = `group bg-white p-6 rounded-xl shadow-card border border-slate-100 hover:shadow-float hover:-translate-y-1 transition-all duration-300 cursor-pointer`;
-                card.onclick = () => openModal(s.name, s.desc);
-                card.innerHTML = `
-                    <div class="w-14 h-14 ${colorMap[s.color]} rounded-lg flex items-center justify-center text-2xl mb-4 transition-all duration-300">
-                        <i class="fa-solid ${s.icon}"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-slate-800 mb-2 group-hover:text-brand-700 transition-colors">${s.name}</h3>
-                    <p class="text-slate-500 text-sm mb-4 leading-relaxed line-clamp-2">${s.desc}</p>
-                    <div class="flex items-center ${btnColor} font-bold text-sm group-hover:translate-x-1 transition-transform">
-                        Ajukan Sekarang <i class="fa-solid fa-arrow-right ml-2"></i>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-            
-            // Set Date
-            const today = new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-            document.getElementById('form-date').value = today;
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
         });
 
-        // Navigation Logic
-        function navigateTo(pageId) {
-            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            document.getElementById('mobile-menu').classList.add('hidden');
-            window.scrollTo(0, 0);
-        }
+        // Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                menu.classList.add('hidden'); // Close mobile menu on click
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
 
-        // Modal Logic
-        const modal = document.getElementById('service-modal');
-        const modalContent = document.getElementById('modal-content');
-
-        function openModal(title, desc) {
-            selectedServiceName = title;
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-desc').innerText = desc;
+        // Mock Status Check Function
+        function handleStatusCheck(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerText;
             
-            modal.classList.remove('opacity-0', 'pointer-events-none');
-            modalContent.classList.remove('scale-95');
-            modalContent.classList.add('scale-100');
-            document.body.classList.add('overflow-hidden');
-        }
-
-        function closeModal() {
-            modal.classList.add('opacity-0', 'pointer-events-none');
-            modalContent.classList.remove('scale-100');
-            modalContent.classList.add('scale-95');
-            document.body.classList.remove('overflow-hidden');
-        }
-
-        function proceedToAction() {
-            closeModal();
-            if (isLoggedIn) {
-                prepareForm();
-                navigateTo('digital-form');
-            } else {
-                navigateTo('login');
-            }
-        }
-
-        // Auth Logic
-        function handleLogin(e) {
-            e.preventDefault();
-            const u = document.getElementById('login-user').value;
-            const p = document.getElementById('login-pass').value;
-            if(u === 'admin' && p === 'admin') {
-                isLoggedIn = true;
-                updateNav();
-                if(selectedServiceName) {
-                    prepareForm();
-                    navigateTo('digital-form');
-                } else {
-                    navigateTo('home');
-                }
-            } else {
-                alert('Username/Password salah! (Gunakan: admin / admin)');
-            }
-        }
-
-        function handleRegister(e) {
-            e.preventDefault();
-            const p1 = document.getElementById('reg-pass').value;
-            const p2 = document.getElementById('reg-pass-conf').value;
-            if(p1 !== p2) {
-                alert('Password tidak cocok!');
-                return;
-            }
-            alert('Registrasi berhasil! Silakan login.');
-            navigateTo('login');
-        }
-
-        function handleLogout() {
-            isLoggedIn = false;
-            selectedServiceName = '';
-            updateNav();
-            navigateTo('home');
-        }
-
-        function updateNav() {
-            if(isLoggedIn) {
-                document.getElementById('nav-login-btn').classList.add('hidden');
-                document.getElementById('nav-register-btn').classList.remove('hidden');
-                document.getElementById('nav-logout-btn').classList.remove('hidden');
-            } else {
-                document.getElementById('nav-login-btn').classList.remove('hidden');
-                document.getElementById('nav-register-btn').classList.add('hidden');
-                document.getElementById('nav-logout-btn').classList.add('hidden');
-            }
-        }
-
-        function prepareForm() {
-            document.getElementById('form-service').value = selectedServiceName;
+            // Loading state
+            btn.innerText = 'Memeriksa...';
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+            
+            setTimeout(() => {
+                // Reset button
+                btn.innerText = originalText;
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                
+                // Show result
+                const resultDiv = document.getElementById('statusResult');
+                resultDiv.classList.remove('hidden');
+                resultDiv.classList.add('animate-pulse');
+                setTimeout(() => resultDiv.classList.remove('animate-pulse'), 1000);
+            }, 1500);
         }
     </script>
 </body>
