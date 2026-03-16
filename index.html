@@ -1,1 +1,1236 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dukcapil Smart - Kabupaten Kepulauan Tanimbar</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Plus Jakarta Sans', sans-serif; }
+    html, body, #app-root { height: 100%; }
+    #app-root { overflow-y: auto; }
 
+    :root {
+      --primary: #1a56db;
+      --primary-dark: #1341a8;
+      --primary-light: #e8f0fe;
+      --surface: #ffffff;
+      --surface2: #f1f5f9;
+      --text: #1e293b;
+      --accent: #0ea5e9;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes slideIn {
+      from { transform: translateX(-20px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .anim-fade-up { animation: fadeUp 0.6s ease forwards; }
+    .anim-fade-up-d1 { animation: fadeUp 0.6s 0.1s ease both; }
+    .anim-fade-up-d2 { animation: fadeUp 0.6s 0.2s ease both; }
+    .anim-fade-up-d3 { animation: fadeUp 0.6s 0.3s ease both; }
+    .anim-fade-in { animation: fadeIn 0.5s ease forwards; }
+    .anim-float { animation: float 4s ease-in-out infinite; }
+    .anim-slide-in { animation: slideIn 0.4s ease forwards; }
+
+    .nav-link {
+      position: relative;
+      color: #475569;
+      font-weight: 500;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+      padding: 4px 0;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 2px;
+      background: var(--primary);
+      transition: width 0.2s;
+    }
+    .nav-link:hover { color: var(--primary); }
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    .nav-link.active { color: var(--primary); }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    .service-card {
+      background: white;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      padding: 24px;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .service-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 8px 30px rgba(26, 86, 219, 0.12);
+      transform: translateY(-4px);
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      padding: 24px;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border-radius: 10px;
+      padding: 12px 24px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 15px rgba(26,86,219,0.3); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      padding: 11px 24px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-outline:hover { background: var(--primary-light); transform: translateY(-1px); }
+
+    .btn-white {
+      background: white;
+      color: var(--primary);
+      border-radius: 10px;
+      padding: 12px 28px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-white:hover { background: #f0f4ff; transform: translateY(-1px); box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+
+    .form-input {
+      width: 100%;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 0.9rem;
+      color: var(--text);
+      background: white;
+      transition: border 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,86,219,0.1); }
+
+    .form-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 6px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 12px;
+      border-radius: 99px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .badge-waiting { background: #fef3c7; color: #92400e; }
+    .badge-process { background: #dbeafe; color: #1e40af; }
+    .badge-done { background: #dcfce7; color: #166534; }
+    .badge-reject { background: #fee2e2; color: #991b1b; }
+
+    .timeline-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      position: relative;
+    }
+    .timeline-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 40px;
+      width: 2px;
+      height: calc(100% + 8px);
+      background: #e2e8f0;
+    }
+    .timeline-step.done::after { background: #22c55e; }
+    .timeline-step.active-step::after { background: linear-gradient(#22c55e, #e2e8f0); }
+
+    .step-dot {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .dot-done { background: #22c55e; color: white; }
+    .dot-active { background: var(--primary); color: white; animation: pulse-dot 1.5s infinite; }
+    .dot-pending { background: #e2e8f0; color: #94a3b8; }
+
+    .hero-gradient {
+      background: linear-gradient(135deg, #1a56db 0%, #0ea5e9 100%);
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .upload-zone {
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .upload-zone:hover { border-color: var(--primary); background: var(--primary-light); }
+
+    .mobile-nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: white;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      z-index: 100;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    }
+    .mobile-nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 4px;
+      cursor: pointer;
+      transition: color 0.2s;
+      color: #94a3b8;
+      font-size: 0.65rem;
+      font-weight: 600;
+      gap: 3px;
+    }
+    .mobile-nav-item.active { color: var(--primary); }
+
+    .header-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #f1f5f9;
+      box-shadow: 0 1px 12px rgba(0,0,0,0.06);
+    }
+
+    /* Illustration SVG animations */
+    .ill-person { animation: float 5s ease-in-out infinite; }
+    .ill-phone { animation: float 5s 1s ease-in-out infinite; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+
+    /* Success modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.5);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-box {
+      background: white;
+      border-radius: 20px;
+      padding: 40px 32px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      animation: fadeUp 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      .desktop-nav { display: none; }
+      .mobile-nav { display: flex; }
+      .hero-illust { display: none; }
+    }
+    @media (min-width: 769px) {
+      .mobile-nav { display: none; }
+      .desktop-nav { display: flex; }
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-slate-50">
+  <div id="app-root" class="h-full overflow-auto"><!-- STICKY HEADER -->
+   <header class="header-sticky">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+     <div class="flex items-center justify-between h-16"><!-- Logo -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="navigate('beranda')">
+       <div class="w-10 h-10 rounded-xl hero-gradient flex items-center justify-center flex-shrink-0">
+        <svg width="22" height="22" viewbox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" /><path d="M8 21h8M12 17v4" />
+        </svg>
+       </div>
+       <div>
+        <div id="hdr-title" class="font-black text-base leading-tight" style="color: var(--primary)">
+         DUKCAPIL SMART
+        </div>
+        <div id="hdr-subtitle" class="text-xs text-slate-500 font-medium leading-tight">
+         Kab. Kepulauan Tanimbar
+        </div>
+       </div>
+      </div><!-- Desktop Nav -->
+      <nav class="desktop-nav items-center gap-6"><a class="nav-link active" onclick="navigate('beranda')" id="nav-beranda">Beranda</a> <a class="nav-link" onclick="navigate('layanan')" id="nav-layanan">Jenis Layanan</a> <a class="nav-link" onclick="navigate('status')" id="nav-status">Cek Status</a> <a class="nav-link" onclick="navigate('admin')" id="nav-admin"> <span class="flex items-center gap-1"> <i data-lucide="layout-dashboard" style="width:14px;height:14px"></i> Admin </span> </a>
+      </nav><!-- Mobile hamburger --> <button class="p-2 rounded-lg desktop-nav:hidden text-slate-600" onclick="toggleMobileMenu()" id="mob-menu-btn" style="display:none"> <i data-lucide="menu" style="width:22px;height:22px"></i> </button>
+     </div>
+    </div>
+   </header><!-- PAGES CONTAINER -->
+   <main><!-- ===================== PAGE: BERANDA ===================== -->
+    <section class="page active" id="page-beranda"><!-- Hero -->
+     <div class="hero-gradient relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+       <svg width="100%" height="100%">
+        <defs>
+         <pattern id="grid" width="40" height="40" patternunits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1" />
+         </pattern>
+        </defs><rect width="100%" height="100%" fill="url(#grid)" />
+       </svg>
+      </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24 relative">
+       <div class="flex items-center gap-12"><!-- Hero Text -->
+        <div class="flex-1">
+         <div class="inline-flex items-center gap-2 bg-white/20 text-white rounded-full px-4 py-2 text-sm font-semibold mb-6 anim-fade-up">
+          <div class="w-2 h-2 bg-green-400 rounded-full"></div> Layanan Online 24/7 Aktif
+         </div>
+         <h1 id="hero-title-el" class="text-3xl md:text-5xl font-extrabold text-white leading-tight mb-3 anim-fade-up-d1">Pelayanan Administrasi<br>
+           Kependudukan</h1>
+         <p id="hero-tagline-el" class="text-xl md:text-2xl font-bold text-blue-100 mb-4 anim-fade-up-d1">Cepat • Mudah • Transparan</p>
+         <p id="hero-desc-el" class="text-blue-100 text-base md:text-lg mb-8 max-w-xl leading-relaxed anim-fade-up-d2">Urus dokumen kependudukan Anda secara online tanpa harus datang ke kantor Dukcapil.</p>
+         <div class="flex flex-wrap gap-3 anim-fade-up-d3"><button class="btn-white" onclick="navigate('permohonan')"> <i data-lucide="file-plus" style="width:18px;height:18px"></i> Ajukan Layanan </button> <button onclick="navigate('status')" style="background:rgba(255,255,255,0.15);color:white;border:2px solid rgba(255,255,255,0.4);border-radius:10px;padding:11px 24px;font-weight:600;font-size:0.95rem;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'"> <i data-lucide="search" style="width:18px;height:18px"></i> Cek Status Permohonan </button>
+         </div>
+        </div><!-- Hero Illustration -->
+        <div class="hero-illust flex-shrink-0 w-80 relative">
+         <div class="anim-float">
+          <svg viewbox="0 0 320 300" fill="none" xmlns="http://www.w3.org/2000/svg"><!-- Government Building --> <rect x="80" y="120" width="160" height="130" rx="4" fill="#1e3a5f" opacity="0.9" /> <rect x="100" y="140" width="30" height="40" rx="2" fill="#60a5fa" opacity="0.8" /> <rect x="145" y="140" width="30" height="40" rx="2" fill="#60a5fa" opacity="0.8" /> <rect x="190" y="140" width="30" height="40" rx="2" fill="#60a5fa" opacity="0.8" /> <rect x="120" y="195" width="80" height="55" rx="4" fill="#2563eb" /> <rect x="80" y="115" width="160" height="14" rx="2" fill="#1e40af" /> <polygon points="160,60 60,115 260,115" fill="#1e3a8a" /> <!-- Flag --> <rect x="157" y="30" width="3" height="35" fill="#e2e8f0" /> <rect x="160" y="30" width="20" height="13" fill="#ef4444" /> <!-- Person with phone --> <circle cx="60" cy="190" r="20" fill="#fbbf24" /> <rect x="44" y="210" width="32" height="45" rx="10" fill="#3b82f6" /> <rect x="25" y="215" width="18" height="28" rx="6" fill="#93c5fd" /> <rect x="58" y="215" width="18" height="28" rx="6" fill="#93c5fd" /> <!-- Phone screen glow --> <rect x="28" y="219" width="12" height="20" rx="3" fill="#bfdbfe" /> <line x1="30" y1="222" x2="38" y2="222" stroke="#60a5fa" stroke-width="1.5" /> <line x1="30" y1="226" x2="38" y2="226" stroke="#60a5fa" stroke-width="1.5" /> <line x1="30" y1="230" x2="35" y2="230" stroke="#60a5fa" stroke-width="1.5" /> <!-- Second person --> <circle cx="260" cy="190" r="20" fill="#f97316" /> <rect x="244" y="210" width="32" height="45" rx="10" fill="#8b5cf6" /> <rect x="263" y="215" width="18" height="28" rx="6" fill="#c4b5fd" /> <!-- Checkmark floating --> <circle cx="200" cy="90" r="18" fill="#22c55e" opacity="0.9" /> <path d="M192 90 L198 97 L210 83" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /> <!-- Document floating --> <rect x="260" y="130" width="35" height="45" rx="4" fill="white" opacity="0.9" /> <line x1="266" y1="142" x2="289" y2="142" stroke="#93c5fd" stroke-width="2" /> <line x1="266" y1="149" x2="289" y2="149" stroke="#93c5fd" stroke-width="2" /> <line x1="266" y1="156" x2="282" y2="156" stroke="#93c5fd" stroke-width="2" />
+          </svg>
+         </div>
+        </div>
+       </div>
+      </div><!-- Wave -->
+      <div style="margin-bottom:-2px">
+       <svg viewbox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveaspectratio="none" style="display:block;width:100%"><path d="M0,40 C360,80 1080,0 1440,40 L1440,60 L0,60 Z" fill="#f8fafc" />
+       </svg>
+      </div>
+     </div><!-- Stats Bar -->
+     <div class="bg-slate-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 -mt-6 relative z-10 pb-8">
+        <div class="stat-card text-center anim-fade-up-d1">
+         <div class="text-3xl font-extrabold mb-1" style="color:var(--primary)">
+          9
+         </div>
+         <div class="text-xs text-slate-500 font-semibold">
+          Jenis Layanan
+         </div>
+        </div>
+        <div class="stat-card text-center anim-fade-up-d1">
+         <div class="text-3xl font-extrabold mb-1" style="color:var(--primary)">
+          24/7
+         </div>
+         <div class="text-xs text-slate-500 font-semibold">
+          Layanan Online
+         </div>
+        </div>
+        <div class="stat-card text-center anim-fade-up-d2">
+         <div class="text-3xl font-extrabold mb-1 text-green-500">
+          1.240
+         </div>
+         <div class="text-xs text-slate-500 font-semibold">
+          Permohonan Selesai
+         </div>
+        </div>
+        <div class="stat-card text-center anim-fade-up-d2">
+         <div class="text-3xl font-extrabold mb-1 text-orange-500">
+          3 Hari
+         </div>
+         <div class="text-xs text-slate-500 font-semibold">
+          Rata-rata Proses
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Layanan Preview -->
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
+      <div class="text-center mb-10">
+       <div class="section-tag">
+        <i data-lucide="grid" style="width:13px;height:13px"></i> Layanan Kami
+       </div>
+       <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800 mb-2">Jenis Layanan Tersedia</h2>
+       <p class="text-slate-500 text-sm">Pilih layanan yang Anda butuhkan dan ajukan permohonan secara online</p>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 mb-8" id="home-services"><!-- rendered by JS -->
+      </div>
+      <div class="text-center"><button class="btn-outline" onclick="navigate('layanan')"> Lihat Semua Layanan <i data-lucide="arrow-right" style="width:16px;height:16px"></i> </button>
+      </div>
+     </div><!-- How it works -->
+     <div style="background:var(--primary-light)" class="py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+       <div class="text-center mb-10">
+        <div class="section-tag">
+         <i data-lucide="info" style="width:13px;height:13px"></i> Cara Kerja
+        </div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800 mb-2">Cara Ajukan Permohonan</h2>
+       </div>
+       <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div class="text-center anim-fade-up-d1">
+         <div class="w-16 h-16 rounded-2xl hero-gradient flex items-center justify-center mx-auto mb-4 shadow-lg"><i data-lucide="user-check" style="width:28px;height:28px;color:white"></i>
+         </div>
+         <div class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center mx-auto mb-3">
+          1
+         </div>
+         <h3 class="font-bold text-slate-800 mb-1">Daftar &amp; Login</h3>
+         <p class="text-sm text-slate-500">Masukkan NIK dan data diri Anda untuk memulai</p>
+        </div>
+        <div class="text-center anim-fade-up-d2">
+         <div class="w-16 h-16 rounded-2xl hero-gradient flex items-center justify-center mx-auto mb-4 shadow-lg"><i data-lucide="clipboard-list" style="width:28px;height:28px;color:white"></i>
+         </div>
+         <div class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center mx-auto mb-3">
+          2
+         </div>
+         <h3 class="font-bold text-slate-800 mb-1">Pilih Layanan</h3>
+         <p class="text-sm text-slate-500">Pilih jenis layanan yang dibutuhkan</p>
+        </div>
+        <div class="text-center anim-fade-up-d3">
+         <div class="w-16 h-16 rounded-2xl hero-gradient flex items-center justify-center mx-auto mb-4 shadow-lg"><i data-lucide="upload-cloud" style="width:28px;height:28px;color:white"></i>
+         </div>
+         <div class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center mx-auto mb-3">
+          3
+         </div>
+         <h3 class="font-bold text-slate-800 mb-1">Upload Dokumen</h3>
+         <p class="text-sm text-slate-500">Lengkapi berkas yang diperlukan</p>
+        </div>
+        <div class="text-center" style="animation: fadeUp 0.6s 0.4s ease both;">
+         <div class="w-16 h-16 rounded-2xl hero-gradient flex items-center justify-center mx-auto mb-4 shadow-lg"><i data-lucide="check-circle" style="width:28px;height:28px;color:white"></i>
+         </div>
+         <div class="w-6 h-6 rounded-full bg-green-500 text-white text-xs font-bold flex items-center justify-center mx-auto mb-3">
+          4
+         </div>
+         <h3 class="font-bold text-slate-800 mb-1">Dokumen Selesai</h3>
+         <p class="text-sm text-slate-500">Ambil dokumen di kantor atau terima via pos</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Footer -->
+     <footer class="bg-slate-800 text-white py-12 mb-14 md:mb-0">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div>
+         <div class="flex items-center gap-2 mb-4">
+          <div class="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center"><i data-lucide="monitor" style="width:18px;height:18px;color:white"></i>
+          </div>
+          <div>
+           <div class="font-extrabold text-sm">
+            DUKCAPIL SMART
+           </div>
+           <div class="text-xs text-slate-400">
+            Kab. Kepulauan Tanimbar
+           </div>
+          </div>
+         </div>
+         <p class="text-slate-400 text-sm leading-relaxed">Layanan administrasi kependudukan modern untuk masyarakat Kabupaten Kepulauan Tanimbar.</p>
+        </div>
+        <div>
+         <h4 class="font-bold mb-4 text-sm">Layanan Cepat</h4>
+         <div class="space-y-2 text-sm text-slate-400">
+          <div class="cursor-pointer hover:text-white transition-colors" onclick="navigate('layanan')">
+           Jenis Layanan
+          </div>
+          <div class="cursor-pointer hover:text-white transition-colors" onclick="navigate('permohonan')">
+           Ajukan Permohonan
+          </div>
+          <div class="cursor-pointer hover:text-white transition-colors" onclick="navigate('status')">
+           Cek Status
+          </div>
+         </div>
+        </div>
+        <div>
+         <h4 class="font-bold mb-4 text-sm">Kontak</h4>
+         <div class="space-y-2 text-sm text-slate-400">
+          <div class="flex items-center gap-2">
+           <i data-lucide="map-pin" style="width:14px;height:14px"></i> Jl. Yos Sudarso, Saumlaki, Maluku
+          </div>
+          <div class="flex items-center gap-2">
+           <i data-lucide="phone" style="width:14px;height:14px"></i> (0918) 21XXX
+          </div>
+          <div class="flex items-center gap-2">
+           <i data-lucide="mail" style="width:14px;height:14px"></i> dukcapil@tanimbar.go.id
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="border-t border-slate-700 pt-6 text-center text-slate-500 text-xs">
+        © 2025 Dinas Kependudukan dan Pencatatan Sipil Kabupaten Kepulauan Tanimbar. Seluruh hak cipta dilindungi.
+       </div>
+      </div>
+     </footer>
+    </section><!-- ===================== PAGE: LAYANAN ===================== -->
+    <section class="page" id="page-layanan">
+     <div class="hero-gradient py-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 text-white">
+       <div class="text-xs font-semibold text-blue-200 mb-1 flex items-center gap-1"><span class="cursor-pointer hover:text-white" onclick="navigate('beranda')">Beranda</span> › Jenis Layanan
+       </div>
+       <h1 class="text-2xl md:text-3xl font-extrabold mb-2">Jenis Layanan</h1>
+       <p class="text-blue-100 text-sm">Pilih layanan administrasi kependudukan yang Anda butuhkan</p>
+      </div>
+     </div>
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 pb-20 md:pb-10">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="all-services"><!-- rendered by JS -->
+      </div>
+     </div>
+    </section><!-- ===================== PAGE: PERMOHONAN ===================== -->
+    <section class="page" id="page-permohonan">
+     <div class="hero-gradient py-10">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 text-white">
+       <div class="text-xs font-semibold text-blue-200 mb-1 flex items-center gap-1"><span class="cursor-pointer hover:text-white" onclick="navigate('beranda')">Beranda</span> › Ajukan Permohonan
+       </div>
+       <h1 class="text-2xl font-extrabold mb-1">Form Permohonan Online</h1>
+       <p class="text-blue-100 text-sm">Isi formulir dengan lengkap dan benar</p>
+      </div>
+     </div>
+     <div class="max-w-3xl mx-auto px-4 sm:px-6 py-8 pb-24 md:pb-10"><!-- Progress Steps -->
+      <div class="flex items-center justify-center gap-2 mb-8">
+       <div class="flex items-center gap-2" id="form-step-1-ind">
+        <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style="background:var(--primary);color:white">
+         1
+        </div><span class="text-sm font-semibold hidden sm:block" style="color:var(--primary)">Data Diri</span>
+       </div>
+       <div class="flex-1 h-0.5 max-w-12 bg-slate-200" id="step-line-1"></div>
+       <div class="flex items-center gap-2" id="form-step-2-ind">
+        <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold bg-slate-200 text-slate-500" id="step-dot-2">
+         2
+        </div><span class="text-sm font-medium hidden sm:block text-slate-400" id="step-label-2">Upload Dokumen</span>
+       </div>
+       <div class="flex-1 h-0.5 max-w-12 bg-slate-200" id="step-line-2"></div>
+       <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold bg-slate-200 text-slate-500" id="step-dot-3">
+         3
+        </div><span class="text-sm font-medium hidden sm:block text-slate-400" id="step-label-3">Konfirmasi</span>
+       </div>
+      </div><!-- Step 1 -->
+      <div id="form-step-1" class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-8">
+       <h2 class="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2"><i data-lucide="user" style="width:20px;height:20px;color:var(--primary)"></i> Data Diri Pemohon</h2>
+       <form id="form-data" onsubmit="goStep2(event)">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+         <div><label class="form-label" for="f-nama">Nama Lengkap <span class="text-red-500">*</span></label> <input class="form-input" id="f-nama" type="text" placeholder="Masukkan nama lengkap" required>
+         </div>
+         <div><label class="form-label" for="f-nik">NIK (16 Digit) <span class="text-red-500">*</span></label> <input class="form-input" id="f-nik" type="text" placeholder="1234567890123456" maxlength="16" required>
+         </div>
+         <div><label class="form-label" for="f-kk">Nomor Kartu Keluarga <span class="text-red-500">*</span></label> <input class="form-input" id="f-kk" type="text" placeholder="Nomor KK 16 digit" maxlength="16" required>
+         </div>
+         <div><label class="form-label" for="f-ttl">Tempat Lahir <span class="text-red-500">*</span></label> <input class="form-input" id="f-ttl" type="text" placeholder="Kota/Kabupaten lahir" required>
+         </div>
+         <div><label class="form-label" for="f-tgl">Tanggal Lahir <span class="text-red-500">*</span></label> <input class="form-input" id="f-tgl" type="date" required>
+         </div>
+         <div><label class="form-label" for="f-jk">Jenis Kelamin <span class="text-red-500">*</span></label> <select class="form-input" id="f-jk" required> <option value="">-- Pilih --</option> <option>Laki-laki</option> <option>Perempuan</option> </select>
+         </div>
+         <div class="md:col-span-2"><label class="form-label" for="f-alamat">Alamat Lengkap <span class="text-red-500">*</span></label> <textarea class="form-input" id="f-alamat" rows="2" placeholder="Jalan, RT/RW, Desa/Kelurahan, Kecamatan" required></textarea>
+         </div>
+         <div><label class="form-label" for="f-hp">Nomor HP / WhatsApp <span class="text-red-500">*</span></label> <input class="form-input" id="f-hp" type="tel" placeholder="08xxxxxxxxxx" required>
+         </div>
+         <div><label class="form-label" for="f-email">Alamat Email</label> <input class="form-input" id="f-email" type="email" placeholder="email@contoh.com">
+         </div>
+         <div class="md:col-span-2"><label class="form-label" for="f-layanan">Jenis Layanan <span class="text-red-500">*</span></label> <select class="form-input" id="f-layanan" required> <option value="">-- Pilih Jenis Layanan --</option> <option>Kartu Keluarga</option> <option>KTP Elektronik</option> <option>Kartu Identitas Anak</option> <option>Pindah Datang</option> <option>Pindah Keluar</option> <option>Akta Kelahiran</option> <option>Akta Kematian</option> <option>Akta Perkawinan</option> <option>Akta Perceraian</option> </select>
+         </div>
+        </div>
+        <div class="mt-8 flex justify-end"><button type="submit" class="btn-primary"> Lanjut: Upload Dokumen <i data-lucide="arrow-right" style="width:16px;height:16px"></i> </button>
+        </div>
+       </form>
+      </div><!-- Step 2 -->
+      <div id="form-step-2" class="hidden bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-8">
+       <h2 class="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2"><i data-lucide="upload-cloud" style="width:20px;height:20px;color:var(--primary)"></i> Upload Dokumen Pendukung</h2>
+       <div class="space-y-5">
+        <div><label class="form-label">Scan / Foto KK <span class="text-red-500">*</span></label>
+         <div class="upload-zone" onclick="fakeUpload('upload-kk-name')"><i data-lucide="file-image" style="width:32px;height:32px;color:#94a3b8;margin:0 auto 8px"></i>
+          <p class="text-sm font-semibold text-slate-600 mb-1">Klik untuk upload Kartu Keluarga</p>
+          <p class="text-xs text-slate-400">Format: JPG, PNG, PDF · Maks 5MB</p>
+          <p class="text-xs font-semibold mt-2" style="color:var(--primary)" id="upload-kk-name"></p>
+         </div>
+        </div>
+        <div><label class="form-label">Scan / Foto KTP <span class="text-red-500">*</span></label>
+         <div class="upload-zone" onclick="fakeUpload('upload-ktp-name')"><i data-lucide="credit-card" style="width:32px;height:32px;color:#94a3b8;margin:0 auto 8px"></i>
+          <p class="text-sm font-semibold text-slate-600 mb-1">Klik untuk upload KTP</p>
+          <p class="text-xs text-slate-400">Format: JPG, PNG, PDF · Maks 5MB</p>
+          <p class="text-xs font-semibold mt-2" style="color:var(--primary)" id="upload-ktp-name"></p>
+         </div>
+        </div>
+        <div><label class="form-label">Dokumen Pendukung Lainnya</label>
+         <div class="upload-zone" onclick="fakeUpload('upload-other-name')"><i data-lucide="paperclip" style="width:32px;height:32px;color:#94a3b8;margin:0 auto 8px"></i>
+          <p class="text-sm font-semibold text-slate-600 mb-1">Klik untuk upload dokumen pendukung</p>
+          <p class="text-xs text-slate-400">Surat keterangan, akta, dll · Maks 10MB</p>
+          <p class="text-xs font-semibold mt-2" style="color:var(--primary)" id="upload-other-name"></p>
+         </div>
+        </div>
+       </div>
+       <div class="mt-8 flex items-center justify-between"><button class="btn-outline" onclick="backStep1()"> <i data-lucide="arrow-left" style="width:16px;height:16px"></i> Kembali </button> <button class="btn-primary" onclick="goStep3()"> Lanjut: Konfirmasi <i data-lucide="arrow-right" style="width:16px;height:16px"></i> </button>
+       </div>
+      </div><!-- Step 3 -->
+      <div id="form-step-3" class="hidden bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-8">
+       <h2 class="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2"><i data-lucide="check-square" style="width:20px;height:20px;color:var(--primary)"></i> Konfirmasi Permohonan</h2>
+       <div id="konfirmasi-data" class="bg-slate-50 rounded-xl p-5 mb-6 space-y-3 text-sm">
+       </div>
+       <div class="flex items-start gap-3 mb-6 p-4 bg-amber-50 rounded-xl border border-amber-200"><i data-lucide="alert-circle" style="width:18px;height:18px;color:#f59e0b;flex-shrink:0;margin-top:1px"></i>
+        <p class="text-sm text-amber-800">Pastikan data yang Anda masukkan sudah benar. Kesalahan data dapat memperlambat proses permohonan.</p>
+       </div>
+       <div class="flex items-center gap-3 mb-6"><input type="checkbox" id="f-agree" class="w-4 h-4"> <label for="f-agree" class="text-sm text-slate-600">Saya menyatakan bahwa semua data yang diisi adalah benar dan dapat dipertanggungjawabkan.</label>
+       </div>
+       <div class="flex items-center justify-between"><button class="btn-outline" onclick="backStep2()"> <i data-lucide="arrow-left" style="width:16px;height:16px"></i> Kembali </button> <button class="btn-primary" onclick="submitForm()" style="background:#22c55e"> <i data-lucide="send" style="width:16px;height:16px"></i> Kirim Permohonan </button>
+       </div>
+      </div>
+     </div>
+    </section><!-- ===================== PAGE: STATUS ===================== -->
+    <section class="page" id="page-status">
+     <div class="hero-gradient py-10">
+      <div class="max-w-2xl mx-auto px-4 sm:px-6 text-white text-center">
+       <h1 class="text-2xl md:text-3xl font-extrabold mb-2">Cek Status Permohonan</h1>
+       <p class="text-blue-100 text-sm">Pantau perkembangan permohonan Anda secara real-time</p>
+      </div>
+     </div>
+     <div class="max-w-2xl mx-auto px-4 sm:px-6 py-8 pb-24 md:pb-10"><!-- Search Form -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 mb-6">
+       <h2 class="font-bold text-slate-800 mb-4 flex items-center gap-2"><i data-lucide="search" style="width:18px;height:18px;color:var(--primary)"></i> Cari Permohonan</h2>
+       <form onsubmit="cekStatus(event)">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+         <div><label class="form-label" for="s-nik">NIK</label> <input class="form-input" id="s-nik" type="text" placeholder="Masukkan NIK 16 digit" maxlength="16">
+         </div>
+         <div><label class="form-label" for="s-noper">atau Nomor Permohonan</label> <input class="form-input" id="s-noper" type="text" placeholder="Contoh: TBR-2025-001234">
+         </div>
+        </div><button type="submit" class="btn-primary w-full justify-center"> <i data-lucide="search" style="width:16px;height:16px"></i> Cek Status </button>
+       </form>
+      </div><!-- Status Result (hidden by default) -->
+      <div id="status-result" class="hidden anim-slide-in">
+       <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 mb-4">
+        <div class="flex items-start justify-between mb-4">
+         <div>
+          <div class="text-xs text-slate-500 font-semibold mb-1">
+           No. Permohonan
+          </div>
+          <div class="text-lg font-extrabold text-slate-800">
+           TBR-2025-004728
+          </div>
+         </div><span class="status-badge badge-process"> <i data-lucide="loader" style="width:12px;height:12px"></i> Sedang Diproses </span>
+        </div>
+        <div class="grid grid-cols-2 gap-3 text-sm bg-slate-50 rounded-xl p-4">
+         <div>
+          <div class="text-slate-400 text-xs">
+           Nama Pemohon
+          </div>
+          <div class="font-semibold text-slate-700">
+           Ahmad Saumlaki
+          </div>
+         </div>
+         <div>
+          <div class="text-slate-400 text-xs">
+           Jenis Layanan
+          </div>
+          <div class="font-semibold text-slate-700">
+           Penerbitan KTP-el
+          </div>
+         </div>
+         <div>
+          <div class="text-slate-400 text-xs">
+           Tanggal Daftar
+          </div>
+          <div class="font-semibold text-slate-700">
+           12 Jan 2025
+          </div>
+         </div>
+         <div>
+          <div class="text-slate-400 text-xs">
+           Estimasi Selesai
+          </div>
+          <div class="font-semibold text-slate-700">
+           15 Jan 2025
+          </div>
+         </div>
+        </div>
+       </div><!-- Timeline -->
+       <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+        <h3 class="font-bold text-slate-800 mb-6 flex items-center gap-2"><i data-lucide="git-branch" style="width:18px;height:18px;color:var(--primary)"></i> Progress Permohonan</h3>
+        <div class="space-y-6">
+         <div class="timeline-step done">
+          <div class="step-dot dot-done">
+           <i data-lucide="check" style="width:16px;height:16px"></i>
+          </div>
+          <div class="flex-1 pb-4">
+           <div class="flex items-center gap-2 mb-1"><span class="font-bold text-slate-800 text-sm">Permohonan Diterima</span> <span class="status-badge badge-done text-xs">Selesai</span>
+           </div>
+           <p class="text-xs text-slate-500">Berkas permohonan telah diterima oleh sistem</p>
+           <p class="text-xs text-slate-400 mt-1">12 Jan 2025, 09.14 WIT</p>
+          </div>
+         </div>
+         <div class="timeline-step done">
+          <div class="step-dot dot-done">
+           <i data-lucide="check" style="width:16px;height:16px"></i>
+          </div>
+          <div class="flex-1 pb-4">
+           <div class="flex items-center gap-2 mb-1"><span class="font-bold text-slate-800 text-sm">Verifikasi Berkas</span> <span class="status-badge badge-done text-xs">Selesai</span>
+           </div>
+           <p class="text-xs text-slate-500">Berkas telah diverifikasi oleh petugas</p>
+           <p class="text-xs text-slate-400 mt-1">13 Jan 2025, 10.32 WIT</p>
+          </div>
+         </div>
+         <div class="timeline-step active-step">
+          <div class="step-dot dot-active">
+           <i data-lucide="settings" style="width:14px;height:14px"></i>
+          </div>
+          <div class="flex-1 pb-4">
+           <div class="flex items-center gap-2 mb-1"><span class="font-bold text-slate-800 text-sm">Sedang Diproses</span> <span class="status-badge badge-process text-xs">Aktif</span>
+           </div>
+           <p class="text-xs text-slate-500">Dokumen sedang dalam proses penerbitan</p>
+           <p class="text-xs text-slate-400 mt-1">14 Jan 2025 — Berlangsung</p>
+          </div>
+         </div>
+         <div class="timeline-step">
+          <div class="step-dot dot-pending">
+           4
+          </div>
+          <div class="flex-1 pb-4">
+           <div class="flex items-center gap-2 mb-1"><span class="font-semibold text-slate-400 text-sm">Dokumen Selesai</span>
+           </div>
+           <p class="text-xs text-slate-400">Dokumen telah selesai dicetak</p>
+          </div>
+         </div>
+         <div class="timeline-step">
+          <div class="step-dot dot-pending">
+           5
+          </div>
+          <div class="flex-1">
+           <div class="flex items-center gap-2 mb-1"><span class="font-semibold text-slate-400 text-sm">Siap Diambil</span>
+           </div>
+           <p class="text-xs text-slate-400">Dokumen siap diambil di kantor Dukcapil</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Empty state -->
+      <div id="status-empty" class="text-center py-12 text-slate-400">
+       <div style="width:64px;height:64px;background:#f1f5f9;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><i data-lucide="search" style="width:28px;height:28px;color:#94a3b8"></i>
+       </div>
+       <p class="text-sm font-medium">Masukkan NIK atau Nomor Permohonan<br>
+         untuk melihat status</p>
+      </div>
+     </div>
+    </section><!-- ===================== PAGE: ADMIN ===================== -->
+    <section class="page" id="page-admin">
+     <div class="hero-gradient py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+       <div class="text-white">
+        <div class="text-xs text-blue-200 mb-1">
+         Dashboard Administrator
+        </div>
+        <h1 class="text-xl md:text-2xl font-extrabold">Panel Admin Dukcapil</h1>
+        <p class="text-blue-100 text-xs mt-1">Selamat datang, Admin • Senin, 14 Januari 2025</p>
+       </div>
+       <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><i data-lucide="user" style="width:20px;height:20px;color:white"></i>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 pb-24 md:pb-10"><!-- Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+       <div class="stat-card">
+        <div class="flex items-center gap-3 mb-2">
+         <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center"><i data-lucide="inbox" style="width:20px;height:20px;color:var(--primary)"></i>
+         </div><span class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Hari Ini</span>
+        </div>
+        <div class="text-3xl font-extrabold text-slate-800">
+         24
+        </div>
+        <div class="text-xs text-slate-400 mt-1">
+         permohonan masuk
+        </div>
+       </div>
+       <div class="stat-card">
+        <div class="flex items-center gap-3 mb-2">
+         <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center"><i data-lucide="clock" style="width:20px;height:20px;color:#f59e0b"></i>
+         </div><span class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Diproses</span>
+        </div>
+        <div class="text-3xl font-extrabold text-amber-500">
+         87
+        </div>
+        <div class="text-xs text-slate-400 mt-1">
+         sedang berjalan
+        </div>
+       </div>
+       <div class="stat-card">
+        <div class="flex items-center gap-3 mb-2">
+         <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center"><i data-lucide="check-circle" style="width:20px;height:20px;color:#22c55e"></i>
+         </div><span class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Selesai</span>
+        </div>
+        <div class="text-3xl font-extrabold text-green-500">
+         1.240
+        </div>
+        <div class="text-xs text-slate-400 mt-1">
+         total bulan ini
+        </div>
+       </div>
+       <div class="stat-card">
+        <div class="flex items-center gap-3 mb-2">
+         <div class="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center"><i data-lucide="alert-triangle" style="width:20px;height:20px;color:#ef4444"></i>
+         </div><span class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Ditolak</span>
+        </div>
+        <div class="text-3xl font-extrabold text-red-500">
+         12
+        </div>
+        <div class="text-xs text-slate-400 mt-1">
+         perlu tindakan
+        </div>
+       </div>
+      </div><!-- Table -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100">
+       <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <h2 class="font-bold text-slate-800 flex items-center gap-2"><i data-lucide="table" style="width:18px;height:18px;color:var(--primary)"></i> Data Permohonan</h2>
+        <div class="flex items-center gap-2">
+         <div class="relative"><i data-lucide="search" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#94a3b8"></i> <input type="text" placeholder="Cari permohonan..." class="form-input text-sm" style="padding-left:32px;width:200px">
+         </div><select class="form-input text-sm" style="width:auto;padding:9px 12px"> <option>Semua Status</option> <option>Menunggu</option> <option>Diproses</option> <option>Selesai</option> <option>Ditolak</option> </select>
+        </div>
+       </div>
+       <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+         <thead>
+          <tr class="border-b border-slate-100">
+           <th class="text-left py-3 px-5 text-xs font-bold text-slate-500 uppercase tracking-wide">No. Permohonan</th>
+           <th class="text-left py-3 px-4 text-xs font-bold text-slate-500 uppercase tracking-wide">Nama Pemohon</th>
+           <th class="text-left py-3 px-4 text-xs font-bold text-slate-500 uppercase tracking-wide hidden md:table-cell">NIK</th>
+           <th class="text-left py-3 px-4 text-xs font-bold text-slate-500 uppercase tracking-wide hidden lg:table-cell">Jenis Layanan</th>
+           <th class="text-left py-3 px-4 text-xs font-bold text-slate-500 uppercase tracking-wide hidden md:table-cell">Tanggal</th>
+           <th class="text-left py-3 px-4 text-xs font-bold text-slate-500 uppercase tracking-wide">Status</th>
+           <th class="text-left py-3 px-4 text-xs font-bold text-slate-500 uppercase tracking-wide">Aksi</th>
+          </tr>
+         </thead>
+         <tbody id="admin-table-body"><!-- rendered by JS -->
+         </tbody>
+        </table>
+       </div>
+       <div class="p-4 border-t border-slate-100 flex items-center justify-between text-sm text-slate-500"><span>Menampilkan 1-8 dari 111 data</span>
+        <div class="flex items-center gap-1"><button class="px-3 py-1 rounded-lg border border-slate-200 hover:bg-slate-50 text-xs">Prev</button> <button class="px-3 py-1 rounded-lg border border-slate-200 text-xs font-bold" style="background:var(--primary);color:white;border-color:var(--primary)">1</button> <button class="px-3 py-1 rounded-lg border border-slate-200 hover:bg-slate-50 text-xs">2</button> <button class="px-3 py-1 rounded-lg border border-slate-200 hover:bg-slate-50 text-xs">3</button> <button class="px-3 py-1 rounded-lg border border-slate-200 hover:bg-slate-50 text-xs">Next</button>
+        </div>
+       </div>
+      </div>
+     </div><!-- Status Change Modal -->
+     <div id="status-modal" class="modal-overlay hidden">
+      <div class="modal-box">
+       <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mx-auto mb-4"><i data-lucide="edit" style="width:26px;height:26px;color:var(--primary)"></i>
+       </div>
+       <h3 class="text-lg font-extrabold text-slate-800 mb-1">Ubah Status</h3>
+       <p class="text-sm text-slate-500 mb-5" id="modal-permohonan-id">No. TBR-2025-001234</p>
+       <div class="space-y-2 mb-6"><button class="w-full py-3 rounded-xl border-2 border-slate-200 text-sm font-semibold hover:border-blue-400 hover:bg-blue-50 transition-all" onclick="setStatus('Menunggu Verifikasi')">⏳ Menunggu Verifikasi</button> <button class="w-full py-3 rounded-xl border-2 border-slate-200 text-sm font-semibold hover:border-blue-400 hover:bg-blue-50 transition-all" onclick="setStatus('Sedang Diproses')">🔄 Sedang Diproses</button> <button class="w-full py-3 rounded-xl border-2 border-slate-200 text-sm font-semibold hover:border-green-400 hover:bg-green-50 transition-all" onclick="setStatus('Selesai')">✅ Selesai</button> <button class="w-full py-3 rounded-xl border-2 border-slate-200 text-sm font-semibold hover:border-red-400 hover:bg-red-50 transition-all" onclick="setStatus('Ditolak')">❌ Ditolak</button>
+       </div><button class="w-full py-3 rounded-xl bg-slate-100 text-slate-600 text-sm font-semibold hover:bg-slate-200 transition-all" onclick="closeStatusModal()">Batal</button>
+      </div>
+     </div>
+    </section>
+   </main><!-- Mobile Bottom Nav -->
+   <nav class="mobile-nav"><button class="mobile-nav-item active" onclick="navigate('beranda')" id="mob-beranda"> <i data-lucide="home" style="width:20px;height:20px"></i> Beranda </button> <button class="mobile-nav-item" onclick="navigate('layanan')" id="mob-layanan"> <i data-lucide="grid" style="width:20px;height:20px"></i> Layanan </button> <button class="mobile-nav-item" onclick="navigate('status')" id="mob-status"> <i data-lucide="clock" style="width:20px;height:20px"></i> Status </button> <button class="mobile-nav-item" onclick="navigate('admin')" id="mob-admin"> <i data-lucide="settings" style="width:20px;height:20px"></i> Admin </button>
+   </nav><!-- Success Modal -->
+   <div id="success-modal" class="modal-overlay hidden">
+    <div class="modal-box">
+     <div class="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-5"><i data-lucide="check-circle" style="width:40px;height:40px;color:#22c55e"></i>
+     </div>
+     <h3 class="text-xl font-extrabold text-slate-800 mb-2">Permohonan Terkirim!</h3>
+     <p class="text-slate-500 text-sm mb-2">Nomor permohonan Anda:</p>
+     <div class="bg-slate-50 rounded-xl py-3 px-6 text-xl font-extrabold mb-6" style="color:var(--primary)">
+      TBR-2025-004729
+     </div>
+     <p class="text-sm text-slate-500 mb-6">Simpan nomor permohonan untuk melacak status. Estimasi selesai <strong>3 hari kerja</strong>.</p>
+     <div class="flex flex-col gap-2"><button class="btn-primary w-full justify-center" onclick="closeSuccessModal(); navigate('status')"> <i data-lucide="search" style="width:16px;height:16px"></i> Cek Status </button> <button onclick="closeSuccessModal(); navigate('beranda')" style="background:none;border:none;color:#64748b;cursor:pointer;font-size:0.9rem;font-weight:600;padding:8px;">Kembali ke Beranda</button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+  // ========= DATA =========
+  const SERVICES = [
+    { icon: 'users', title: 'Kartu Keluarga', desc: 'Pengajuan pembuatan Kartu Keluarga baru untuk rumah tangga baru', color: '#3b82f6' },
+    { icon: 'credit-card', title: 'KTP Elektronik', desc: 'Pembuatan KTP elektronik pertama atau penggantian KTP hilang/rusak', color: '#0ea5e9' },
+    { icon: 'baby', title: 'Kartu Identitas Anak', desc: 'Kartu Identitas Anak untuk warga berusia di bawah 17 tahun', color: '#f59e0b' },
+    { icon: 'truck', title: 'Pindah Datang', desc: 'Layanan mutasi penduduk pindah datang antar daerah', color: '#10b981' },
+    { icon: 'arrow-right-circle', title: 'Pindah Keluar', desc: 'Layanan mutasi penduduk pindah keluar dari daerah', color: '#06b6d4' },
+    { icon: 'heart', title: 'Akta Kelahiran', desc: 'Penerbitan akta kelahiran bagi bayi yang baru lahir', color: '#ec4899' },
+    { icon: 'file-minus', title: 'Akta Kematian', desc: 'Penerbitan akta kematian untuk anggota keluarga yang meninggal', color: '#64748b' },
+    { icon: 'rings-wedding', title: 'Akta Perkawinan', desc: 'Pencatatan dan penerbitan akta perkawinan resmi', color: '#ef4444' },
+    { icon: 'file-x', title: 'Akta Perceraian', desc: 'Penerbitan akta perceraian berdasarkan keputusan pengadilan', color: '#f97316' },
+  ];
+
+  const ADMIN_DATA = [
+    { no: 'TBR-2025-004728', nama: 'Ahmad Saumlaki', nik: '8104020***', layanan: 'Penerbitan KTP-el', tgl: '14 Jan 2025', status: 'process' },
+    { no: 'TBR-2025-004727', nama: 'Maria Tanimbar', nik: '8104021***', layanan: 'Akta Kelahiran', tgl: '14 Jan 2025', status: 'waiting' },
+    { no: 'TBR-2025-004726', nama: 'Yusuf Fordata', nik: '8104015***', layanan: 'Penerbitan KK', tgl: '13 Jan 2025', status: 'done' },
+    { no: 'TBR-2025-004725', nama: 'Sara Larat', nik: '8104019***', layanan: 'Perubahan KK', tgl: '13 Jan 2025', status: 'process' },
+    { no: 'TBR-2025-004724', nama: 'Petrus Molu', nik: '8104018***', layanan: 'Akta Perkawinan', tgl: '12 Jan 2025', status: 'done' },
+    { no: 'TBR-2025-004723', nama: 'Agnes Wunlah', nik: '8104017***', layanan: 'Pindah Datang', tgl: '12 Jan 2025', status: 'reject' },
+    { no: 'TBR-2025-004722', nama: 'Benny Selaru', nik: '8104016***', layanan: 'Penerbitan KIA', tgl: '11 Jan 2025', status: 'done' },
+    { no: 'TBR-2025-004721', nama: 'Dewi Yamdena', nik: '8104022***', layanan: 'Akta Kematian', tgl: '11 Jan 2025', status: 'waiting' },
+  ];
+
+  const STATUS_MAP = {
+    waiting: { label: 'Menunggu', cls: 'badge-waiting', icon: 'clock' },
+    process: { label: 'Diproses', cls: 'badge-process', icon: 'loader' },
+    done:    { label: 'Selesai',  cls: 'badge-done',    icon: 'check-circle' },
+    reject:  { label: 'Ditolak', cls: 'badge-reject',   icon: 'x-circle' },
+  };
+
+  // ========= NAVIGATION =========
+  let currentPage = 'beranda';
+  let selectedService = '';
+  const pages = ['beranda', 'layanan', 'permohonan', 'status', 'admin'];
+
+  function navigate(page) {
+    pages.forEach(p => {
+      document.getElementById('page-' + p).classList.toggle('active', p === page);
+      const nav = document.getElementById('nav-' + p);
+      if (nav) nav.classList.toggle('active', p === page);
+      const mob = document.getElementById('mob-' + p);
+      if (mob) mob.classList.toggle('active', p === page);
+    });
+    currentPage = page;
+    document.getElementById('app-root').scrollTo({ top: 0, behavior: 'smooth' });
+    lucide.createIcons();
+  }
+
+  function selectServiceAndNavigate(serviceTitle) {
+    selectedService = serviceTitle;
+    // Set the service in the form
+    document.getElementById('f-layanan').value = serviceTitle;
+    navigate('permohonan');
+  }
+
+  // ========= RENDER SERVICES =========
+  function serviceCard(s, idx) {
+    return `<div class="service-card anim-fade-up" style="animation-delay:${idx * 0.05}s" onclick="selectServiceAndNavigate('${s.title}')">
+      <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style="background:${s.color}20">
+        <i data-lucide="${s.icon}" style="width:22px;height:22px;color:${s.color}"></i>
+      </div>
+      <h3 class="font-bold text-slate-800 text-sm mb-2">${s.title}</h3>
+      <p class="text-xs text-slate-500 leading-relaxed mb-4">${s.desc}</p>
+      <button class="btn-primary w-full justify-center" style="padding:9px 16px;font-size:0.8rem;background:${s.color}">
+        Ajukan <i data-lucide="arrow-right" style="width:13px;height:13px"></i>
+      </button>
+    </div>`;
+  }
+
+  // Render home preview (6 cards)
+  document.getElementById('home-services').innerHTML = SERVICES.slice(0, 6).map((s, i) => serviceCard(s, i)).join('');
+  // Render all services
+  document.getElementById('all-services').innerHTML = SERVICES.map((s, i) => serviceCard(s, i)).join('');
+
+  // ========= RENDER ADMIN TABLE =========
+  function renderAdminTable() {
+    const tbody = document.getElementById('admin-table-body');
+    tbody.innerHTML = ADMIN_DATA.map((d, i) => {
+      const st = STATUS_MAP[d.status];
+      return `<tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+        <td class="py-3 px-5 text-xs font-mono text-slate-500">${d.no}</td>
+        <td class="py-3 px-4"><div class="font-semibold text-slate-800 text-sm">${d.nama}</div></td>
+        <td class="py-3 px-4 text-xs text-slate-500 hidden md:table-cell">${d.nik}</td>
+        <td class="py-3 px-4 text-xs text-slate-600 hidden lg:table-cell">${d.layanan}</td>
+        <td class="py-3 px-4 text-xs text-slate-400 hidden md:table-cell">${d.tgl}</td>
+        <td class="py-3 px-4">
+          <span class="status-badge ${st.cls}">
+            <i data-lucide="${st.icon}" style="width:11px;height:11px"></i> ${st.label}
+          </span>
+        </td>
+        <td class="py-3 px-4">
+          <div class="flex items-center gap-1">
+            <button title="Lihat dokumen" onclick="viewDoc('${d.no}')" style="width:30px;height:30px;border-radius:8px;background:#f1f5f9;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s" onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='#f1f5f9'">
+              <i data-lucide="eye" style="width:14px;height:14px;color:#64748b"></i>
+            </button>
+            <button title="Ubah status" onclick="openStatusModal('${d.no}')" style="width:30px;height:30px;border-radius:8px;background:#f1f5f9;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s" onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='#f1f5f9'">
+              <i data-lucide="edit-2" style="width:14px;height:14px;color:#64748b"></i>
+            </button>
+          </div>
+        </td>
+      </tr>`;
+    }).join('');
+    lucide.createIcons();
+  }
+  renderAdminTable();
+
+  // ========= FORM STEPS =========
+  function goStep2(e) {
+    e.preventDefault();
+    document.getElementById('form-step-1').classList.add('hidden');
+    document.getElementById('form-step-2').classList.remove('hidden');
+    // Update indicators
+    document.getElementById('step-dot-2').style.background = 'var(--primary)';
+    document.getElementById('step-dot-2').style.color = 'white';
+    document.getElementById('step-label-2').style.color = 'var(--primary)';
+    document.getElementById('step-line-1').style.background = 'var(--primary)';
+    lucide.createIcons();
+  }
+  function backStep1() {
+    document.getElementById('form-step-2').classList.add('hidden');
+    document.getElementById('form-step-1').classList.remove('hidden');
+    document.getElementById('step-dot-2').style.background = '#e2e8f0';
+    document.getElementById('step-dot-2').style.color = '#94a3b8';
+    document.getElementById('step-label-2').style.color = '#94a3b8';
+    document.getElementById('step-line-1').style.background = '#e2e8f0';
+    lucide.createIcons();
+  }
+  function goStep3() {
+    document.getElementById('form-step-2').classList.add('hidden');
+    document.getElementById('form-step-3').classList.remove('hidden');
+    document.getElementById('step-dot-3').style.background = 'var(--primary)';
+    document.getElementById('step-dot-3').style.color = 'white';
+    document.getElementById('step-label-3').style.color = 'var(--primary)';
+    document.getElementById('step-line-2').style.background = 'var(--primary)';
+    // Fill confirmation
+    const konfirmasi = document.getElementById('konfirmasi-data');
+    const fields = [
+      { label: 'Nama Lengkap', val: document.getElementById('f-nama').value || '-' },
+      { label: 'NIK', val: document.getElementById('f-nik').value || '-' },
+      { label: 'No. KK', val: document.getElementById('f-kk').value || '-' },
+      { label: 'Tempat Lahir', val: document.getElementById('f-ttl').value || '-' },
+      { label: 'Tanggal Lahir', val: document.getElementById('f-tgl').value || '-' },
+      { label: 'Jenis Kelamin', val: document.getElementById('f-jk').value || '-' },
+      { label: 'Nomor HP', val: document.getElementById('f-hp').value || '-' },
+      { label: 'Jenis Layanan', val: document.getElementById('f-layanan').value || '-' },
+    ];
+    konfirmasi.innerHTML = fields.map(f =>
+      `<div class="flex justify-between items-center text-sm border-b border-slate-100 pb-2">
+        <span class="text-slate-500 font-medium">${f.label}</span>
+        <span class="font-semibold text-slate-800 text-right max-w-xs">${f.val}</span>
+      </div>`
+    ).join('');
+    lucide.createIcons();
+  }
+  function backStep2() {
+    document.getElementById('form-step-3').classList.add('hidden');
+    document.getElementById('form-step-2').classList.remove('hidden');
+    document.getElementById('step-dot-3').style.background = '#e2e8f0';
+    document.getElementById('step-dot-3').style.color = '#94a3b8';
+    document.getElementById('step-label-3').style.color = '#94a3b8';
+    document.getElementById('step-line-2').style.background = '#e2e8f0';
+    lucide.createIcons();
+  }
+  function submitForm() {
+    if (!document.getElementById('f-agree').checked) {
+      // Show inline notice
+      const box = document.getElementById('form-step-3');
+      let notice = box.querySelector('.agree-notice');
+      if (!notice) {
+        notice = document.createElement('div');
+        notice.className = 'agree-notice text-sm text-red-600 font-medium mb-3';
+        notice.textContent = '⚠️ Harap centang pernyataan persetujuan sebelum mengirim.';
+        document.getElementById('f-agree').parentElement.before(notice);
+      }
+      return;
+    }
+    document.getElementById('success-modal').classList.remove('hidden');
+    // Reset form
+    document.getElementById('form-data').reset();
+    backStep2(); backStep1();
+    lucide.createIcons();
+  }
+  function closeSuccessModal() {
+    document.getElementById('success-modal').classList.add('hidden');
+  }
+
+  // ========= UPLOAD FAKE =========
+  const fakeFiles = ['dokumen_kk.pdf', 'foto_ktp.jpg', 'surat_keterangan.pdf'];
+  let fakeIdx = 0;
+  function fakeUpload(elId) {
+    document.getElementById(elId).textContent = '✓ ' + fakeFiles[fakeIdx % fakeFiles.length];
+    fakeIdx++;
+  }
+
+  // ========= CEK STATUS =========
+  function cekStatus(e) {
+    e.preventDefault();
+    const nik = document.getElementById('s-nik').value;
+    const noper = document.getElementById('s-noper').value;
+    if (!nik && !noper) return;
+    document.getElementById('status-empty').classList.add('hidden');
+    document.getElementById('status-result').classList.remove('hidden');
+    lucide.createIcons();
+  }
+
+  // ========= ADMIN MODAL =========
+  let currentModalId = '';
+  function openStatusModal(id) {
+    currentModalId = id;
+    document.getElementById('modal-permohonan-id').textContent = 'No. ' + id;
+    document.getElementById('status-modal').classList.remove('hidden');
+    lucide.createIcons();
+  }
+  function closeStatusModal() {
+    document.getElementById('status-modal').classList.add('hidden');
+  }
+  function setStatus(newStatus) {
+    closeStatusModal();
+    // Find and update in ADMIN_DATA (visual feedback)
+    const row = ADMIN_DATA.find(d => d.no === currentModalId);
+    if (row) {
+      if (newStatus === 'Selesai') row.status = 'done';
+      else if (newStatus === 'Sedang Diproses') row.status = 'process';
+      else if (newStatus === 'Menunggu Verifikasi') row.status = 'waiting';
+      else row.status = 'reject';
+    }
+    renderAdminTable();
+
+    // Show inline toast
+    showToast('Status diubah: ' + newStatus);
+  }
+
+  function viewDoc(id) {
+    showToast('Membuka dokumen ' + id + '...');
+  }
+
+  // Toast
+  function showToast(msg) {
+    let toast = document.getElementById('global-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'global-toast';
+      toast.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:#1e293b;color:white;padding:10px 20px;border-radius:99px;font-size:0.85rem;font-weight:600;z-index:300;opacity:0;transition:all 0.3s;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.2)';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(-50%) translateY(20px)';
+    }, 2500);
+  }
+
+  // ========= ELEMENT SDK =========
+  const defaultConfig = {
+    app_title: 'DUKCAPIL SMART',
+    app_subtitle: 'Kabupaten Kepulauan Tanimbar',
+    hero_title: 'Pelayanan Administrasi Kependudukan',
+    hero_tagline: 'Cepat • Mudah • Transparan',
+    hero_desc: 'Urus dokumen kependudukan Anda secara online tanpa harus datang ke kantor Dukcapil.',
+    primary_color: '#1a56db',
+    surface_color: '#ffffff',
+    text_color: '#1e293b',
+    accent_color: '#0ea5e9',
+    font_family: 'Plus Jakarta Sans',
+    font_size: 15,
+  };
+
+  window.elementSdk && window.elementSdk.init({
+    defaultConfig,
+    onConfigChange: async (config) => {
+      const applyColor = (el, prop, val) => { if (el) el.style[prop] = val; };
+      // Text
+      const t = v => v || '';
+      document.getElementById('hdr-title').textContent = t(config.app_title) || defaultConfig.app_title;
+      document.getElementById('hdr-subtitle').textContent = t(config.app_subtitle) || defaultConfig.app_subtitle;
+      document.getElementById('hero-title-el').textContent = t(config.hero_title) || defaultConfig.hero_title;
+      document.getElementById('hero-tagline-el').textContent = t(config.hero_tagline) || defaultConfig.hero_tagline;
+      document.getElementById('hero-desc-el').textContent = t(config.hero_desc) || defaultConfig.hero_desc;
+      // Colors via CSS vars
+      const primary = config.primary_color || defaultConfig.primary_color;
+      const surface = config.surface_color || defaultConfig.surface_color;
+      const text = config.text_color || defaultConfig.text_color;
+      const accent = config.accent_color || defaultConfig.accent_color;
+      document.documentElement.style.setProperty('--primary', primary);
+      document.documentElement.style.setProperty('--surface', surface);
+      document.documentElement.style.setProperty('--text', text);
+      document.documentElement.style.setProperty('--accent', accent);
+      document.body.style.color = text;
+      // Font
+      const font = config.font_family || defaultConfig.font_family;
+      const size = config.font_size || defaultConfig.font_size;
+      document.body.style.fontFamily = `'${font}', 'Plus Jakarta Sans', sans-serif`;
+      document.body.style.fontSize = size + 'px';
+    },
+    mapToCapabilities: (config) => ({
+      recolorables: [
+        { get: () => config.primary_color || defaultConfig.primary_color, set: v => { config.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); } },
+        { get: () => config.surface_color || defaultConfig.surface_color, set: v => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+        { get: () => config.text_color || defaultConfig.text_color, set: v => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+        { get: () => config.accent_color || defaultConfig.accent_color, set: v => { config.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); } },
+      ],
+      borderables: [],
+      fontEditable: {
+        get: () => config.font_family || defaultConfig.font_family,
+        set: v => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+      },
+      fontSizeable: {
+        get: () => config.font_size || defaultConfig.font_size,
+        set: v => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+      },
+    }),
+    mapToEditPanelValues: (config) => new Map([
+      ['app_title', config.app_title || defaultConfig.app_title],
+      ['app_subtitle', config.app_subtitle || defaultConfig.app_subtitle],
+      ['hero_title', config.hero_title || defaultConfig.hero_title],
+      ['hero_tagline', config.hero_tagline || defaultConfig.hero_tagline],
+      ['hero_desc', config.hero_desc || defaultConfig.hero_desc],
+    ]),
+  });
+
+  // Initialize icons
+  lucide.createIcons();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dd08e8f635640c6',t:'MTc3MzYzMDU0My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
